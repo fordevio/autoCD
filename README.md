@@ -1,0 +1,1 @@
+# autoCD is a platform to provide CD solutions in  a monolithic server
