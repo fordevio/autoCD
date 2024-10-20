@@ -7,10 +7,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.fordevio.producer.models.User;
+import com.fordevio.producer.models.enums.Role;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
     Optional<User> findByUsername(String Username);
     Optional<User> findById(Long id);
-    List<User> findByIsAdminTrue();
+    List<User> findByRoles(Role role);
 }

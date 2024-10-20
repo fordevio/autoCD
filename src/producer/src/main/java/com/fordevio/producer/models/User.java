@@ -1,12 +1,16 @@
 package com.fordevio.producer.models;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import com.fordevio.producer.models.enums.Permission;
+import com.fordevio.producer.models.enums.Role;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -43,9 +47,12 @@ public class User implements Serializable{
    private String password;
 
    @NotBlank
-   private Boolean isAdmin;
+   @ElementCollection(fetch = FetchType.EAGER)
+   @Enumerated(EnumType.STRING)
+   private Set<Role> roles;
 
    @NotBlank
+   @ElementCollection(fetch = FetchType.EAGER)
    @Enumerated(EnumType.STRING)
-   private Permission permission;
+   private Set<Permission> permissions;
 }
