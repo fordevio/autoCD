@@ -12,6 +12,5 @@ import com.fordevio.producer.models.enums.Role;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
     Optional<User> findByUsername(String Username);
-    Optional<User> findById(Long id);
     List<User> findByRoles(Role role);
 }
