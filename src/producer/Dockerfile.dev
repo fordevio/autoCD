@@ -3,6 +3,4 @@ FROM maven:3.8.4-openjdk-17 AS build
 # Set the working directory
 WORKDIR /app 
 
-RUN apt-get update && apt-get install -y make
-
 EXPOSE 5001

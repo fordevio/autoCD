@@ -2,7 +2,7 @@ buildDevImage:
 	@docker build -t autocd-producer -f Dockerfile.dev .
 
 runDevContainer:
-	@docker run -it --rm -v $PWD:/app -v /var/autocd:/var/autocd -p 5001:5001 autocd-producer /bin/bash
+	@docker run -it --rm -v $(shell pwd):/app -v /var/autocd:/var/autocd -p 5001:5001 autocd-producer /bin/bash -c "mvn spring-boot:run"
 
-runMvn:
+runApp:
 	@mvn spring-boot:run
