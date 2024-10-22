@@ -6,13 +6,18 @@ import java.util.Objects;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class UserDetailsImpl implements UserDetails{
     private String username;
     private Long id;
+
+    @JsonIgnore
     private String password;
+
     private Collection<? extends GrantedAuthority> authorities;
     
     
