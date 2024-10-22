@@ -11,6 +11,8 @@ import com.fordevio.producer.models.enums.Permission;
 import com.fordevio.producer.models.enums.Role;
 import com.fordevio.producer.repositories.UserRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class UserHandlerImpl implements UserHandler{
  
@@ -18,7 +20,8 @@ public class UserHandlerImpl implements UserHandler{
     @Autowired 
     private UserRepository userRepository;
 
-    public void createAdminIfNot(){
+    @Override
+    public void createAdminIfNot() throws Exception{
         List<User> admins = userRepository.findByRoles(Role.ADMIN);
         if(admins.isEmpty()){
             User admin = User.builder()
@@ -29,5 +32,16 @@ public class UserHandlerImpl implements UserHandler{
                     .build();
             userRepository.save(admin);
         }
+    }
+
+    @Override
+    public User getUserByUsername(String username) throws Exception{
+        return userRepository.findByUsername(username).orElse(null);
+    }
+
+    @Override 
+    @Transactional
+    public User saveUser(User user) throws Exception{
+        return userRepository.save(user);
     }
 }

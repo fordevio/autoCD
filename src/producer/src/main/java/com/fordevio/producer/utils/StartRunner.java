@@ -18,6 +18,11 @@ public class StartRunner {
 
     @PostConstruct
     public void createAdminIfNot(){
-        userHandler.createAdminIfNot();
+        try {
+            userHandler.createAdminIfNot();
+        } catch (Exception e) {
+            log.error("Error while creating admin", e);
+            throw new RuntimeException("Error while creating admin", e);
+        }
     }
 }
