@@ -44,4 +44,9 @@ public class UserHandlerImpl implements UserHandler{
     public User saveUser(User user) throws Exception{
         return userRepository.save(user);
     }
+
+    @Override 
+    public List<User> getAllUsers() throws Exception{
+        return userRepository.findAll();
+    }
 }

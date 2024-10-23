@@ -18,7 +18,7 @@ import com.fordevio.producer.services.UserHandler;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/protected")
+@RequestMapping("/api/protected/user")
 public class UserController {
     
    @Autowired
@@ -29,7 +29,7 @@ public class UserController {
        return ResponseEntity.ok(userDetails);
    }
 
-   @PostMapping("/admin/user/add")
+   @PostMapping("/admin/add")
    public ResponseEntity<?> addUser(@Valid @RequestBody AddUpdateUserRequest user){
         try{
              User isAvail = userHandler.getUserByUsername(user.getUsername());
@@ -47,4 +47,14 @@ public class UserController {
             return ResponseEntity.internalServerError().body(new MessageResponse(e.getMessage()));
         }
    }
+
+   @GetMapping("/admin/all")
+    public ResponseEntity<?> getAllUsers(){
+         try{
+              return ResponseEntity.ok(userHandler.getAllUsers());
+         }catch(Exception e){
+              return ResponseEntity.internalServerError().body(new MessageResponse(e.getMessage()));
+         }
+    }
+
 }

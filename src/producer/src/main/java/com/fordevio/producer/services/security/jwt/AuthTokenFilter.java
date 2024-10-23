@@ -1,8 +1,5 @@
 package com.fordevio.producer.services.security.jwt;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,8 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fordevio.producer.services.security.UserDetailsServiceImpl;
+import com.fordevio.producer.utils.UnauthorizeResponse;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -34,6 +31,9 @@ public class AuthTokenFilter extends OncePerRequestFilter{
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    private UnauthorizeResponse unauthorizeResponse;
+
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull FilterChain chain) throws ServletException, IOException{
   
@@ -50,12 +50,12 @@ public class AuthTokenFilter extends OncePerRequestFilter{
     
                     SecurityContextHolder.getContext().setAuthentication(authentication);
              }else{
-                sendUnauthorizedResponse(response, "Missing JWT token");
+                unauthorizeResponse.sendUnauthorizedResponse(request, response, "Empty authentication token");
                 return;
              }
             }catch(Exception e){
               log.warn("Jwt exception:",e);
-              sendUnauthorizedResponse(response, e.getMessage());
+              unauthorizeResponse.sendUnauthorizedResponse(request, response, e.getMessage());
                 return;
             }
         }
@@ -71,22 +71,5 @@ public class AuthTokenFilter extends OncePerRequestFilter{
         }
         return null;
     }
-
-    private void sendUnauthorizedResponse(HttpServletResponse response, String message) throws IOException {
-    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); 
-    response.setContentType("application/json");
-
-    final Map<String, Object> body = new HashMap<>();
-    body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
-    body.put("error", "Unauthorized");
-    body.put("message", message);
-  
-
-    // Convert the response body to JSON and write it to the output stream
-    final ObjectMapper mapper = new ObjectMapper();
-    mapper.writeValue(response.getOutputStream(), body);
-
-    response.getOutputStream().flush(); // Ensure the response is written out
-}
 
 }
