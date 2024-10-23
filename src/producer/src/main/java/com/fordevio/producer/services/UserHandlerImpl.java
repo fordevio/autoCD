@@ -49,4 +49,19 @@ public class UserHandlerImpl implements UserHandler{
     public List<User> getAllUsers() throws Exception{
         return userRepository.findAll();
     }
+
+    @Override 
+    public User getUserById(Long id) throws Exception{
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public User getAdminUser() throws Exception{
+        return userRepository.findByRoles(Role.ADMIN).stream().findFirst().orElse(null);
+    }
+
+    @Override 
+    public void deleteUser(Long id) throws Exception{
+        userRepository.deleteById(id);
+    }
 }
