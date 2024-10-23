@@ -29,12 +29,6 @@ public class AddUpdateUserRequest {
    @Size(max = 20, min = 4)
    private String password;
 
-   @NotBlank
-   @ElementCollection(fetch = FetchType.EAGER)
-   @Enumerated(EnumType.STRING)
-   private Set<Role> roles;
-
-   @NotBlank
    @ElementCollection(fetch = FetchType.EAGER)
    @Enumerated(EnumType.STRING)
    private Set<Permission> permissions;

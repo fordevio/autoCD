@@ -1,5 +1,7 @@
 package com.fordevio.producer.controllers;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fordevio.producer.models.User;
+import com.fordevio.producer.models.enums.Permission;
+import com.fordevio.producer.models.enums.Role;
 import com.fordevio.producer.payloads.requests.AddUpdateUserRequest;
 import com.fordevio.producer.payloads.response.MessageResponse;
 import com.fordevio.producer.services.UserHandler;
@@ -38,11 +42,18 @@ public class UserController {
              if (isAvail != null){
                  return ResponseEntity.badRequest().body(new MessageResponse("User already exists"));
             }
+
+            Set<Permission> permissions  = Set.of(Permission.READ);
+
+            if(user.getPermissions() != null ) {
+                    permissions = user.getPermissions();
+            }
+
             User newUser = userHandler.saveUser(User.builder()
                     .username(user.getUsername())
                     .password(user.getPassword())
-                    .permissions(user.getPermissions())
-                    .roles(user.getRoles())
+                    .permissions(permissions)
+                    .roles(Set.of(Role.MEMBER))
                     .build());
             return ResponseEntity.ok(newUser);
         }catch(Exception e){
@@ -62,7 +73,6 @@ public class UserController {
     @DeleteMapping("/admin/delete/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
        try{
-
                User user = userHandler.getUserById(id);
                if(user == null){
                     return ResponseEntity.badRequest().body(new MessageResponse("User not found"));
@@ -78,6 +88,6 @@ public class UserController {
            return ResponseEntity.internalServerError().body(new MessageResponse(e.getMessage()));
        }
           
-    }
+     }
 
 }
