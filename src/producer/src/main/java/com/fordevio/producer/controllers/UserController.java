@@ -98,6 +98,10 @@ public class UserController {
              if(userToUpdate == null){
                  return ResponseEntity.badRequest().body(new MessageResponse("User not found"));
              }
+             User isName = userHandler.getUserByUsername(user.getUsername());
+                if(isName != null && !isName.getId().equals(id)){
+                      return ResponseEntity.badRequest().body(new MessageResponse("User already exists"));
+            }
              User adminUser = userHandler.getAdminUser();
              Set<Permission> permissions = userToUpdate.getPermissions();
              if (adminUser!= null&& user.getPermissions() != null && !adminUser.getId().equals(id)){

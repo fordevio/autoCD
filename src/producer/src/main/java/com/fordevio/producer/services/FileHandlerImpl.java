@@ -24,7 +24,7 @@ public class FileHandlerImpl implements FileHandlerSvc{
 
     @Override 
     public void createScriptsIfNot(String name) throws Exception {
-        name = "/var/autocd/scripts/" + name;
+        name = "/var/autocd/scripts/" + name+".sh";
         Path path = Paths.get(name);
         if (!Files.exists(path)) {
             Files.createFile(path);
@@ -36,7 +36,7 @@ public class FileHandlerImpl implements FileHandlerSvc{
 
     @Override 
     public void createLogsIfNot(String name) throws Exception {
-        name = "/var/autocd/logs/" + name;
+        name = "/var/autocd/logs/" + name+".log";
         Path path = Paths.get(name);
         if (!Files.exists(path)) {
             Files.createFile(path);
@@ -48,30 +48,30 @@ public class FileHandlerImpl implements FileHandlerSvc{
 
     @Override 
     public void renameLogFiles(String oldName, String newName) throws Exception {
-        Path source = Paths.get("/var/autocd/logs/" + oldName);
-        Path target = Paths.get("/var/autocd/logs/" + newName);
+        Path source = Paths.get("/var/autocd/logs/" + oldName+".log");
+        Path target = Paths.get("/var/autocd/logs/" + newName+".log");
         Files.move(source, target, StandardCopyOption.REPLACE_EXISTING);
         log.info("Logs File renamed from {} to {}", oldName, newName);
     }
 
     @Override 
     public void renameScriptFiles(String oldName, String newName) throws Exception {
-        Path source = Paths.get("/var/autocd/scripts/" + oldName);
-        Path target = Paths.get("/var/autocd/scripts/" + newName);
+        Path source = Paths.get("/var/autocd/scripts/" + oldName+".sh");
+        Path target = Paths.get("/var/autocd/scripts/" + newName+".sh");
         Files.move(source, target, StandardCopyOption.REPLACE_EXISTING);
         log.info("Scripts File renamed from {} to {}", oldName, newName);
     }
 
     @Override 
     public void removeLogFiles(String name) throws Exception {
-        Path path = Paths.get("/var/autocd/logs/" + name);
+        Path path = Paths.get("/var/autocd/logs/" + name+  ".log");
         Files.deleteIfExists(path);
         log.info("Logs File removed: " + name);
     }
 
     @Override 
     public void removeScriptFiles(String name) throws Exception {
-        Path path = Paths.get("/var/autocd/scripts/" + name);
+        Path path = Paths.get("/var/autocd/scripts/" + name+  ".sh");
         Files.deleteIfExists(path);
         log.info("Scripts File removed: " + name);
     }
