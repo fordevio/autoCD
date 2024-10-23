@@ -3,7 +3,6 @@ package com.fordevio.producer.payloads.requests;
 import java.util.Set;
 
 import com.fordevio.producer.models.enums.Permission;
-import com.fordevio.producer.models.enums.Role;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.EnumType;
