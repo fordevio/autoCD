@@ -10,4 +10,7 @@ public interface FileHandlerSvc {
     public void removeLogFiles(String name) throws Exception;
     public void removeScriptFiles(String name) throws Exception;
     public void editProjectScript(String name, String script) throws Exception;
+    public String getProjectScript(String name) throws Exception;
+    public String getProjectLogs(String name) throws Exception;
+    public String getProjectLogPath(String name) throws Exception;
 } 

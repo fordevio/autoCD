@@ -82,5 +82,23 @@ public class FileHandlerImpl implements FileHandlerSvc{
         Files.write(path, script.getBytes());
         log.info("Scripts File edited: " + name);
     }
+    
+    @Override
+    public String getProjectScript(String name) throws Exception {
+        Path path = Paths.get("/var/autocd/scripts/" + name+  ".sh");
+        String content = Files.readString(path);
+        return content;
+    }
 
+    @Override
+    public String getProjectLogs(String name) throws Exception {
+        Path path = Paths.get("/var/autocd/logs/" + name+  ".log");
+        String content = Files.readString(path);
+        return content;
+    }
+
+    @Override
+    public String getProjectLogPath(String name) throws Exception {
+        return "/var/autocd/logs/" + name+  ".log";
+    }
 }
