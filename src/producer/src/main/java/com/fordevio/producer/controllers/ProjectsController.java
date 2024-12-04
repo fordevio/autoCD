@@ -175,5 +175,4 @@ public class ProjectsController {
             return ResponseEntity.internalServerError().body(new MessageResponse(e.getMessage()));
         }
     }
-
 }
