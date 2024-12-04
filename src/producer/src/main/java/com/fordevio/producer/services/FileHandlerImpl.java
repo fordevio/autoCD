@@ -76,4 +76,11 @@ public class FileHandlerImpl implements FileHandlerSvc{
         log.info("Scripts File removed: " + name);
     }
 
+    @Override
+    public void editProjectScript(String name, String script) throws Exception {
+        Path path = Paths.get("/var/autocd/scripts/" + name+  ".sh");
+        Files.write(path, script.getBytes());
+        log.info("Scripts File edited: " + name);
+    }
+
 }

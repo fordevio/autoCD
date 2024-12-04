@@ -6,12 +6,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fordevio.producer.models.Project;
 import com.fordevio.producer.payloads.requests.AddUpdateProjectRequest;
+import com.fordevio.producer.payloads.requests.EditScriptRequest;
 import com.fordevio.producer.payloads.response.MessageResponse;
 import com.fordevio.producer.services.FileHandlerSvc;
 import com.fordevio.producer.services.ProjectHandler;
@@ -20,7 +22,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/api/projected/project")
+@RequestMapping("/api/protected/project")
 @Slf4j
 public class ProjectsController {
   
@@ -101,6 +103,22 @@ public class ProjectsController {
             return ResponseEntity.ok(new MessageResponse("Project deleted successfully"));
         }catch(Exception e){
             log.warn("Error while deleting project", e);
+            return ResponseEntity.internalServerError().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> editProjectScript(@PathVariable Long id, @RequestBody EditScriptRequest editScriptRequest){
+        try{
+            Project project = projectHandler.getProjectById(id);
+            if(project == null){
+                return ResponseEntity.badRequest().body(new MessageResponse("Project does not exists"));
+            }
+            fileHandler.editProjectScript(project.getName(), editScriptRequest.getData());
+            log.info(project.getName() + " script edited successfully");
+            return ResponseEntity.ok(new MessageResponse("Project script edited successfully"));
+        }catch(Exception e){
+            log.warn("Error while editing project script", e);
             return ResponseEntity.internalServerError().body(new MessageResponse(e.getMessage()));
         }
     }

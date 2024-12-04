@@ -9,4 +9,5 @@ public interface FileHandlerSvc {
     public void renameScriptFiles(String oldName, String newName) throws Exception;
     public void removeLogFiles(String name) throws Exception;
     public void removeScriptFiles(String name) throws Exception;
+    public void editProjectScript(String name, String script) throws Exception;
 } 
