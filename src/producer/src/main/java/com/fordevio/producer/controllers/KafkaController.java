@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/deliver")
+@RequestMapping("/api/protected/deliver")
 public class KafkaController {
     
     @Autowired
