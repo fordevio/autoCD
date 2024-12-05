@@ -25,8 +25,8 @@ public class KafkaController {
     @Autowired
     private ProjectHandler projectHandler;
 
-    public void sendMessage(String topicName,String msg) {
-      kafkaTemplate.send(topicName, msg);
+    public void sendMessage(String key,String msg) {
+      kafkaTemplate.send("autocd",key, msg);
     }   
     
     @PostMapping("/{projectName}")
@@ -36,7 +36,7 @@ public class KafkaController {
             if(project == null){
                 return ResponseEntity.badRequest().body(new MessageResponse("Project does not exist"));
             }
-            sendMessage(project.getName(), "CD request to deliver project: "+project.getName());
+            sendMessage(project.getName(), project.getName());
             log.info("Delivered CD msg for: {}", projectName);
             return ResponseEntity.ok(new MessageResponse("Project delivered successfully"));
         }catch(Exception e){
