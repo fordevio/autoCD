@@ -1,0 +1,222 @@
+{
+	"info": {
+		"_postman_id": "14e19501-f11d-4c14-94ad-939f9b46e2c3",
+		"name": "autocd",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "25136228"
+	},
+	"item": [
+		{
+			"name": "producer",
+			"item": [
+				{
+					"name": "initial",
+					"item": [
+						{
+							"name": "status",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTYwNDAzMywiZXhwIjoxNzI5NjMyODMzfQ.g0BFgCWgRhqyckqNhzf5wbVHfdbcZ4jiqARoiDASWMI"
+									}
+								],
+								"url": "http://localhost:5001/api/status"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "auth",
+					"item": [
+						{
+							"name": "login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\":\"yash\",\n  \"password\":\"yash\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:5001/api/auth/login"
+							},
+							"response": []
+						},
+						{
+							"name": "getToken",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "getLoggedInUser",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTY3NjA5MCwiZXhwIjoxNzI5NzA0ODkwfQ.QWs7irkads0oSVaEksFlsPsAzdIOed8Dl7l1RDmcIFE"
+									}
+								],
+								"url": "http://localhost:5001/api/protected/user"
+							},
+							"response": []
+						},
+						{
+							"name": "addUser",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5YXNoIiwiaWF0IjoxNzI5NjAzNDAwLCJleHAiOjE3Mjk2MzIyMDB9.8lRYJgtst1EiXks9fMCWMeiPa4IP0bCtSliR84sECRM"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\":\"garima\",\n  \"password\":\"yash\",\n  \"roles\":[\"MEMBER\"],\n  \"permissions\":[\"READ\",\"WRITE\",\"DELETE\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:5001/api/protected/admin/user/add"
+							},
+							"response": []
+						},
+						{
+							"name": "getAllUsers",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5YXNoIiwiaWF0IjoxNzI5Njc2OTg5LCJleHAiOjE3Mjk3MDU3ODl9.XXkswVD_XGDc3i227rKuwWOXhUbmlGXxMAxWfCqZ1Kk"
+									}
+								],
+								"url": "http://localhost:5001/api/protected/admin/user/all"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "project",
+					"item": [
+						{
+							"name": "Creaate",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "getAll",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "getProject",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "updateProject",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "editScript",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "getScript",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5YXNoIiwiaWF0IjoxNzMzMjkyNDM3LCJleHAiOjE3MzMzMjEyMzd9.dRB6zw7o6Vroo0Iit67qvpXb1xW6TfEJK30HaAWTP4c",
+										"type": "text"
+									}
+								],
+								"url": "http://localhost:5001/api/protected/project/getScript/2"
+							},
+							"response": []
+						},
+						{
+							"name": "getLogs",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "getLogStream",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "kafka",
+					"item": [
+						{
+							"name": "cd",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "consumer",
+			"item": []
+		}
+	]
+}
