@@ -37,6 +37,7 @@ public class KafkaController {
                 return ResponseEntity.badRequest().body(new MessageResponse("Project does not exist"));
             }
             sendMessage(project.getName(), "CD request to deliver project: "+project.getName());
+            log.info("Delivered CD msg for: {}", projectName);
             return ResponseEntity.ok(new MessageResponse("Project delivered successfully"));
         }catch(Exception e){
             log.warn("Error while getting project logs", e);
