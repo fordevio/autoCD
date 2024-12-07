@@ -1,5 +1,7 @@
 package com.fordevio.producer.services;
 
+import java.io.IOException;
+
 public interface FileHandlerSvc {
     
     public void createDirIfNot(String dirPath) throws Exception;
@@ -13,4 +15,5 @@ public interface FileHandlerSvc {
     public String getProjectScript(String name) throws Exception;
     public String getProjectLogs(String name) throws Exception;
     public String getProjectLogPath(String name) throws Exception;
+    public void executeShellScript(String scriptFilePath, String logFilePath) throws IOException, InterruptedException;
 } 

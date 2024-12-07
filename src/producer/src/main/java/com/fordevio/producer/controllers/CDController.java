@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/api/protected/deliver")
-public class KafkaController {
+public class CDController {
     
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
@@ -36,9 +36,10 @@ public class KafkaController {
             if(project == null){
                 return ResponseEntity.badRequest().body(new MessageResponse("Project does not exist"));
             }
-            sendMessage(project.getName(), project.getName());
+            String scriptFilePath = "/var/autocd/scripts/"+projectName+".sh";
+             String logFilePath = "/var/autocd/logs/"+projectName+".log";
             log.info("Delivered CD msg for: {}", projectName);
-            return ResponseEntity.ok(new MessageResponse("Project delivered successfully"));
+            return ResponseEntity.ok(new MessageResponse("Project CD successfully"));
         }catch(Exception e){
             log.warn("Error while getting project logs", e);
             return ResponseEntity.internalServerError().body(new MessageResponse(e.getMessage()));

@@ -1,5 +1,7 @@
 package com.fordevio.producer.services;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.*;
 
 import org.springframework.stereotype.Service;
@@ -100,5 +102,29 @@ public class FileHandlerImpl implements FileHandlerSvc{
     @Override
     public String getProjectLogPath(String name) throws Exception {
         return "/var/autocd/logs/" + name+  ".log";
+    }
+
+    @Override
+    public void executeShellScript(String scriptFilePath, String logFilePath) throws IOException, InterruptedException {
+        // Define the command to execute the shell script
+        File file = new File(scriptFilePath);
+        file.setExecutable(true);
+
+        ProcessBuilder processBuilder = new ProcessBuilder("bash", scriptFilePath);
+
+        // Redirect output (stdout and stderr) to the log file
+        File logFile = new File(logFilePath);
+        processBuilder.redirectOutput(logFile);
+        processBuilder.redirectError(logFile);
+        Process process = processBuilder.start();
+
+        // Wait for the process to finish
+        int exitCode = process.waitFor();
+
+        if (exitCode == 0) {
+            log.info(scriptFilePath + " executed successfully");
+        } else {
+            log.error(scriptFilePath + " failed with exit code " + exitCode);
+        }
     }
 }
