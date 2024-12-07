@@ -57,6 +57,8 @@ public class ProjectsController {
             Project pr = projectHandler.saveProject(new Project(null, addUpdateProjectRequest.getName(), addUpdateProjectRequest.getDescription()));
             fileHandler.createScriptsIfNot(pr.getName());
             fileHandler.createLogsIfNot(pr.getName());
+            String script = "#!/bin/bash\n\n# Add your script here\n";
+            fileHandler.editProjectScript(pr.getName(), script);
             return ResponseEntity.ok(pr);
 
         }catch(Exception e){
