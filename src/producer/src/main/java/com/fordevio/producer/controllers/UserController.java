@@ -31,7 +31,7 @@ public class UserController {
    @Autowired
    private UserHandler userHandler;
 
-   @GetMapping("/user")
+   @GetMapping("/me")
    public ResponseEntity<?> getLoggedInUser(@AuthenticationPrincipal UserDetails userDetails){
        return ResponseEntity.ok(userDetails);
    }
