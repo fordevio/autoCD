@@ -1,8 +1,14 @@
-build: 
-	@npm --prefix ./src/client run build 
+build: installDependencies
+	@npm --prefix ./src/client run build  && mvn -f ./src/producer/pom.xml clean install -DskipTests -Dmaven.test.skip=true
 
 run:
 	@mvn -f ./src/producer/pom.xml spring-boot:run
+
+installDependencies:
+	@npm --prefix ./src/client install
+
+test:
+	@mvn -f ./src/producer/pom.xml test
 
 runReact: 
 	@npm --prefix ./src/client start
