@@ -19,6 +19,7 @@ import com.fordevio.producer.models.User;
 import com.fordevio.producer.models.enums.Permission;
 import com.fordevio.producer.models.enums.Role;
 import com.fordevio.producer.payloads.requests.AddUpdateUserRequest;
+import com.fordevio.producer.payloads.response.CurrentUserResponse;
 import com.fordevio.producer.payloads.response.MessageResponse;
 import com.fordevio.producer.services.UserHandler;
 
@@ -33,7 +34,12 @@ public class UserController {
 
    @GetMapping("/me")
    public ResponseEntity<?> getLoggedInUser(@AuthenticationPrincipal UserDetails userDetails){
-       return ResponseEntity.ok(userDetails);
+        try{
+            User user = userHandler.getUserByUsername(userDetails.getUsername());
+            return ResponseEntity.ok(new CurrentUserResponse(user.getId(), user.getUsername(), user.getRoles(), user.getPermissions()));
+        }catch(Exception e){
+            return ResponseEntity.internalServerError().body(new MessageResponse(e.getMessage()));
+        }
    }
 
    @PostMapping("/admin/add")
