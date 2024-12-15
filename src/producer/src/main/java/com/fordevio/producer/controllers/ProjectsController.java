@@ -135,6 +135,12 @@ public class ProjectsController {
             if(project == null){
                 return ResponseEntity.badRequest().body(new MessageResponse("Project does not exists"));
             }
+            String pattern = "^rm\\s+(-rf\\s+)?(-f\\s+)?(\\/bin|\\/etc|\\/proc|\\/root|\\/usr|\\/boot|\\/var|\\/tmp|\\/dev)(/.*)?";  // Regular expression
+            boolean isMatch = editScriptRequest.getData().matches(pattern);
+            if(isMatch || editScriptRequest.getData().matches("^rm\\s+(-rf\\s+)?(-f\\s+)?(\\/\\s+)(.*)?")){
+                return ResponseEntity.badRequest().body(new MessageResponse("Root directory deletion is not allowed"));   
+            }
+     
             fileHandler.editProjectScript(project.getName(), editScriptRequest.getData());
             log.info(project.getName() + " script edited successfully");
             return ResponseEntity.ok(new MessageResponse("Project script edited successfully"));
