@@ -3,15 +3,16 @@ import Projects from "./pages/project";
 import Login from "./pages/login";
 import "./index.css"
 import Navbar from "./components/navbar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getToken } from "./utils/utils";
 import toast from "react-hot-toast";
 import { getCurrentUser } from "./api/user";
+import { CurrentUser } from "./models/user";
 
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const [currUser, setCurrUser]= useState<CurrentUser | null>(null);
   const fetchCurrentUser = async()=>{
     if(!getToken()){
 
@@ -22,6 +23,7 @@ function App() {
     }
     try{
       const user = await getCurrentUser();
+      setCurrUser(user);
       if(location.pathname === "/login"){ 
         navigate("/");
         return;
@@ -40,7 +42,7 @@ function App() {
   },[])
   return (
     <div>
-      <Navbar/>
+      <Navbar currUser={currUser}/>
       <Routes>
       <Route path="/" element={<Projects />} />
       <Route path="/login" element={<Login/>} />
