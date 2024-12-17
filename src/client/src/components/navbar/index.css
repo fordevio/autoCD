@@ -1,0 +1,17 @@
+
+.navbar{
+    height: 80px;
+    background-color: rgb(85, 186, 233);
+    display: flex;
+    ;
+}
+
+.navbar-logo{
+    height: 70px;
+    width: 70px;
+    padding: 2px 2px;
+}
+
+.nav-h1{
+    color: rgb(11, 33, 97);
+}
