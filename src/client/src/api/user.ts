@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CurrentUser } from "../models/user";
+import { CurrentUser, UserModel } from "../models/user";
 import { getHost, getToken } from "../utils/utils";
 
 const url=getHost()
@@ -14,3 +14,12 @@ export const getCurrentUser = async ():Promise<CurrentUser> => {
     return response.data;
 }
 
+
+export const getUsers = async():Promise<UserModel[]> =>{
+    const response = await axios.get<UserModel[]>(url+"/api/protected/user/admin/all",{
+        headers:{
+            Authorization: `Bearer ${token}`
+        }
+    })
+    return response.data;
+}

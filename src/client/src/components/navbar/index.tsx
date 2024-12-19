@@ -13,10 +13,10 @@ const Navbar: React.FC<Prop> = ({currUser}) => {
     <div className="navbar">
       <img src={logo} alt="logo" className="navbar-logo"/>
       <h1 className="nav-h1">autoCD</h1>
-      <div className="nav-links">
+     {currUser&& <div className="nav-links">
         <Link className="link" to={"/"}>Projects</Link>
         {currUser && currUser.roles.includes("ADMIN") &&<Link  to="/users" className="link">Users</Link>}
-      </div>
+      </div>}
     </div>
   )
 }

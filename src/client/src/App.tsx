@@ -8,6 +8,7 @@ import { getToken } from "./utils/utils";
 import toast from "react-hot-toast";
 import { getCurrentUser } from "./api/user";
 import { CurrentUser } from "./models/user";
+import User from "./pages/user";
 
 function App() {
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ function App() {
       <Routes>
       <Route path="/" element={<Projects />} />
       <Route path="/login" element={<Login/>} />
+      <Route path="/users" element={<User/>}/>
       </Routes>
     </div>
   );

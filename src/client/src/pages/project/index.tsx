@@ -1,8 +1,16 @@
 import "./index.css"
 
+
+
 const Projects = () => {
   return (
-    <div>Projects</div>
+    <div className="project-page">
+      <button className="project-btn">Create Project</button>
+      <div>
+        
+      </div>
+
+    </div>
   )
 }
 
