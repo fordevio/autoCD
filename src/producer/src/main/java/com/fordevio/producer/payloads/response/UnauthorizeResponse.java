@@ -1,4 +1,4 @@
-package com.fordevio.producer.utils;
+package com.fordevio.producer.payloads.response;
 
 import java.util.HashMap;
 import java.util.Map;

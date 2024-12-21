@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.fordevio.producer.payloads.response.UnauthorizeResponse;
 import com.fordevio.producer.services.security.UserDetailsServiceImpl;
-import com.fordevio.producer.utils.UnauthorizeResponse;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

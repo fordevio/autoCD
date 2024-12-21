@@ -11,8 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.fordevio.producer.payloads.response.UnauthorizeResponse;
 import com.fordevio.producer.services.security.UserDetailsImpl;
-import com.fordevio.producer.utils.UnauthorizeResponse;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
