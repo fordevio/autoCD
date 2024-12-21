@@ -38,7 +38,7 @@ public class CDController {
             }
             Random random = new Random();
             int randomNumber = 1000 + random.nextInt(9000);
-            ProjectExecute projectExecute = new ProjectExecute(randomNumber*1L, project.getName(), new Date());
+            ProjectExecute projectExecute = new ProjectExecute(randomNumber*1L, project.getId(), project.getName(), new Date());
             queueService.addProjectToQueue(projectExecute);
             log.info("Delivered CD msg for: {}, projectExecuteId: {}", projectName, projectExecute.getId());
             return ResponseEntity.ok(new MessageResponse("Project CD successfully"));

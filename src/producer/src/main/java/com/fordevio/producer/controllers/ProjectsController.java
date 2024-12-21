@@ -22,6 +22,7 @@ import com.fordevio.producer.payloads.requests.EditScriptRequest;
 import com.fordevio.producer.payloads.response.MessageResponse;
 import com.fordevio.producer.services.FileHandlerSvc;
 import com.fordevio.producer.services.ProjectHandler;
+import com.fordevio.producer.services.ProjectStatusMap;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,10 @@ public class ProjectsController {
   
     @Autowired
     private ProjectHandler projectHandler;
+
+
+    @Autowired
+    private ProjectStatusMap projectStatusMap;
 
     @Autowired
     private FileHandlerSvc fileHandler;
@@ -55,10 +60,11 @@ public class ProjectsController {
                 return ResponseEntity.badRequest().body(new MessageResponse("Project already exists"));
             }
             Project pr = projectHandler.saveProject(new Project(null, addUpdateProjectRequest.getName(), addUpdateProjectRequest.getDescription()));
-            fileHandler.createScriptsIfNot(pr.getName());
-            fileHandler.createLogsIfNot(pr.getName());
+            projectStatusMap.put(pr.getId(), false);
+            fileHandler.createScriptsIfNot(pr.getId()+"");
+            fileHandler.createLogsIfNot(pr.getId()+"");
             String script = "#!/bin/bash\n\n# Add your script here\n";
-            fileHandler.editProjectScript(pr.getName(), script);
+            fileHandler.editProjectScript(pr.getId()+"", script);
             return ResponseEntity.ok(pr);
 
         }catch(Exception e){
@@ -99,10 +105,6 @@ public class ProjectsController {
                 des = addUpdateProjectRequest.getDescription();
             }
             Project pr = projectHandler.saveProject(new Project(id, addUpdateProjectRequest.getName(), des));
-            if(!isAval.getName().equals(pr.getName())){
-                fileHandler.renameScriptFiles(isAval.getName(), pr.getName());
-                fileHandler.renameLogFiles(isAval.getName(), pr.getName());
-            }
             return ResponseEntity.ok(pr);
 
         }catch(Exception e){
@@ -119,8 +121,9 @@ public class ProjectsController {
                 return ResponseEntity.badRequest().body(new MessageResponse("Project does not exists"));
             }
             projectHandler.deleteProject(id);
-            fileHandler.removeLogFiles(project.getName());
-            fileHandler.removeScriptFiles(project.getName());
+            projectStatusMap.remove(project.getId());
+            fileHandler.removeLogFiles(project.getId()+"");
+            fileHandler.removeScriptFiles(project.getId()+"");
             return ResponseEntity.ok(new MessageResponse("Project deleted successfully"));
         }catch(Exception e){
             log.warn("Error while deleting project", e);
@@ -141,7 +144,7 @@ public class ProjectsController {
                 return ResponseEntity.badRequest().body(new MessageResponse("Root directory deletion is not allowed"));   
             }
      
-            fileHandler.editProjectScript(project.getName(), editScriptRequest.getData());
+            fileHandler.editProjectScript(project.getId()+"", editScriptRequest.getData());
             log.info(project.getName() + " script edited successfully");
             return ResponseEntity.ok(new MessageResponse("Project script edited successfully"));
         }catch(Exception e){
@@ -157,7 +160,7 @@ public class ProjectsController {
             if(project == null){
                 return ResponseEntity.badRequest().body(new MessageResponse("Project does not exists"));
             }
-            return ResponseEntity.ok(fileHandler.getProjectScript(project.getName()));
+            return ResponseEntity.ok(fileHandler.getProjectScript(project.getId()+""));
         }catch(Exception e){
             log.warn("Error while getting project script", e);
             return ResponseEntity.internalServerError().body(new MessageResponse(e.getMessage()));
@@ -172,7 +175,7 @@ public class ProjectsController {
                 return ResponseEntity.badRequest().body(new MessageResponse("Project does not exists"));
             }
             if(!stream){
-                return ResponseEntity.ok(fileHandler.getProjectLogs(project.getName()));
+                return ResponseEntity.ok(fileHandler.getProjectLogs(project.getId()+""));
             }
             FileInputStream fileInputStream = new FileInputStream(fileHandler.getProjectLogPath(project.getName()));
             return ResponseEntity.ok()

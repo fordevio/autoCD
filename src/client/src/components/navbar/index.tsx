@@ -1,14 +1,16 @@
 import "./index.css"
 import logo from "../../assets/autocd-logo.png"
 import { CurrentUser } from "../../models/user"
-import React from "react"
+import React, { useEffect } from "react"
 import { Link } from "react-router-dom"
 
 interface Prop {
   currUser : CurrentUser | null
+  setCurrUser: (user: CurrentUser | null) => void
 }
 
-const Navbar: React.FC<Prop> = ({currUser}) => {
+const Navbar: React.FC<Prop> = ({currUser, setCurrUser}) => {
+  useEffect(()=>{},[currUser, setCurrUser])
   return (
     <div className="navbar">
       <img src={logo} alt="logo" className="navbar-logo"/>

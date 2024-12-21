@@ -43,7 +43,7 @@ function App() {
   },[])
   return (
     <div>
-      <Navbar currUser={currUser}/>
+      <Navbar currUser={currUser} setCurrUser={setCurrUser}/>
       <Routes>
       <Route path="/" element={<Projects />} />
       <Route path="/login" element={<Login/>} />

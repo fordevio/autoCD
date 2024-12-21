@@ -16,7 +16,10 @@ public class ProjectExecute {
     
     @NotNull
     private Long id;
-    
+
+    @NotNull
+    private Long projectId;
+
     @NotNull
     private String projectName;
 

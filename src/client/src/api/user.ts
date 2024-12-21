@@ -23,3 +23,17 @@ export const getUsers = async():Promise<UserModel[]> =>{
     })
     return response.data;
 }
+
+export const createUser = async(username: string, password: string, roles: string[], permissions: string[])=>{
+    const response = await axios.post(url+"/api/protected/user/admin/create",{
+        "username":username,
+        "password":password,
+        "roles":roles,
+        "permissions":permissions
+    },{
+        headers:{
+            Authorization: `Bearer ${token}`
+        }
+    })
+    return response.data;
+}
