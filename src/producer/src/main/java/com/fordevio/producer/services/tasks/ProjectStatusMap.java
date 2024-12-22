@@ -1,4 +1,4 @@
-package com.fordevio.producer.services;
+package com.fordevio.producer.services.tasks;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -16,7 +16,6 @@ public class ProjectStatusMap {
         return statusMap.get(key);
     }
 
-
     public void remove(Long key) {
         statusMap.remove(key);
     }
@@ -24,8 +23,4 @@ public class ProjectStatusMap {
     public boolean containsKey(Long key) {
         return statusMap.containsKey(key);
     }
-
-
-
-
 }

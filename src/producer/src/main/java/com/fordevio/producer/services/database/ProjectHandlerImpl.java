@@ -1,4 +1,4 @@
-package com.fordevio.producer.services;
+package com.fordevio.producer.services.database;
 
 import java.util.List;
 

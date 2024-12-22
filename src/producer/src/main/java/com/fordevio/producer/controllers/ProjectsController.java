@@ -20,9 +20,9 @@ import com.fordevio.producer.models.Project;
 import com.fordevio.producer.payloads.requests.AddUpdateProjectRequest;
 import com.fordevio.producer.payloads.requests.EditScriptRequest;
 import com.fordevio.producer.payloads.response.MessageResponse;
-import com.fordevio.producer.services.FileHandlerSvc;
-import com.fordevio.producer.services.ProjectHandler;
-import com.fordevio.producer.services.ProjectStatusMap;
+import com.fordevio.producer.services.database.ProjectHandler;
+import com.fordevio.producer.services.fileIO.FileHandlerSvc;
+import com.fordevio.producer.services.tasks.ProjectStatusMap;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;

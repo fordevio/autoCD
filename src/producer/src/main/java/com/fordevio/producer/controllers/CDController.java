@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fordevio.producer.models.Project;
 import com.fordevio.producer.models.ProjectExecute;
 import com.fordevio.producer.payloads.response.MessageResponse;
-import com.fordevio.producer.services.ProjectHandler;
-import com.fordevio.producer.services.QueueService;
+import com.fordevio.producer.services.database.ProjectHandler;
+import com.fordevio.producer.services.tasks.QueueService;
 
 import lombok.extern.slf4j.Slf4j;
 

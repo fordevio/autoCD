@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fordevio.producer.models.User;
 import com.fordevio.producer.payloads.requests.LoginRequest;
 import com.fordevio.producer.payloads.response.LoginResponse;
-import com.fordevio.producer.services.UserHandler;
+import com.fordevio.producer.services.database.UserHandler;
 import com.fordevio.producer.services.security.jwt.JwtUtils;
 
 import jakarta.validation.Valid;

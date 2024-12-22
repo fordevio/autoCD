@@ -1,4 +1,4 @@
-package com.fordevio.producer.services;
+package com.fordevio.producer.services.tasks;
 
 import java.util.concurrent.ArrayBlockingQueue;
 

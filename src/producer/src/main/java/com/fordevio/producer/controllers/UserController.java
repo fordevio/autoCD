@@ -21,7 +21,7 @@ import com.fordevio.producer.models.enums.Role;
 import com.fordevio.producer.payloads.requests.AddUpdateUserRequest;
 import com.fordevio.producer.payloads.response.CurrentUserResponse;
 import com.fordevio.producer.payloads.response.MessageResponse;
-import com.fordevio.producer.services.UserHandler;
+import com.fordevio.producer.services.database.UserHandler;
 
 import jakarta.validation.Valid;
 

@@ -1,6 +1,5 @@
 package com.fordevio.producer.services;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -9,7 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fordevio.producer.models.Project;
-import com.fordevio.producer.models.ProjectExecute;
+import com.fordevio.producer.services.database.ProjectHandler;
+import com.fordevio.producer.services.database.UserHandler;
+import com.fordevio.producer.services.fileIO.FileHandlerSvc;
+import com.fordevio.producer.services.tasks.ProjectStatusMap;
+import com.fordevio.producer.services.tasks.QueueService;
+import com.fordevio.producer.services.tasks.ScriptExecutionTask;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +38,8 @@ public class StartRunner {
 
     @Autowired
     private ProjectStatusMap projectStatusMap;
+
+    private int totalThreads=0;
 
     @PostConstruct
     public void init(){
@@ -62,7 +68,7 @@ public class StartRunner {
 
     void createThreadsForScriptExecution(){
       for (int i = 0; i < 7; i++) {
-        executorService.submit(new ScriptExecutionTask(i));
+        executorService.submit(new ScriptExecutionTask(i, queueService, projectStatusMap, fileHandler));
         log.info("Thread {} started", i);
     }
     }
@@ -75,52 +81,8 @@ public class StartRunner {
         log.info("Project status map created");
     }
 
-    class ScriptExecutionTask implements Runnable {
-
-      private final int threadNumber;
-
-      private Long projectId=0*1L;
-
-      private String projectName="";
-
-      private Long projectExecuteId=0*1L;
-
-      public ScriptExecutionTask(int threadNumber) {
-          this.threadNumber = threadNumber;
-      }
-
-      @Override
-      public void run() {
-          while(!Thread.currentThread().isInterrupted()){
-              try{
-                ProjectExecute projectExecute = queueService.getProjectFromQueue();
-                Boolean isProjectRunning = projectStatusMap.get(projectExecute.getProjectId());
-                if(isProjectRunning){
-                    log.info("Project is already running, so skipping this project: {}", projectExecute.getProjectName());
-                    continue;
-                }
-                projectStatusMap.put(projectExecute.getProjectId(), true);
-                this.projectId = projectExecute.getProjectId();
-                this.projectName = projectExecute.getProjectName();
-                this.projectExecuteId = projectExecute.getId();
-                String scriptFilePath = "/var/autocd/scripts/"+projectExecute.getProjectId()+".sh";
-                String logFilePath = "/var/autocd/logs/"+projectExecute.getProjectId()+".log";
-                fileHandler.executeShellScript(scriptFilePath, logFilePath);    
-                projectStatusMap.put(projectExecute.getProjectId(), false); 
-                log.info("Executed script for projec: {}, in thread {}, requested at time: {}, with ID:{}", projectExecute.getProjectName(), threadNumber, projectExecute.getCreatedDate(), projectExecute.getId());
-
-              }catch(InterruptedException e){
-                log.error("Error in thread {}",threadNumber, e);
-                projectStatusMap.put(this.projectId, false);
-                Thread.currentThread().interrupt();
-                break;
-              }catch(IOException e){
-                projectStatusMap.put(this.projectId, false);
-                log.error("Error in thread {}, while executing the project: {}, and projectExcutionId: {}",threadNumber,this.projectName, this.projectExecuteId,e);
-              }
-          }
-      }
-  }
+    
+    
 
 
 }
