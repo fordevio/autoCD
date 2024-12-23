@@ -43,7 +43,9 @@ public class ScriptExecutionTask implements Runnable {
             try{
               Thread.sleep(100); // 100 ms
               ThreadStatusModel threadStatus=executionThreadStatus.get(threadId);
-          
+              if(queueService.isQueueEmpty()){
+                continue;
+              }
               this.threadStatus = threadStatus;
               threadStatus.setRunning(true);
               executionThreadStatus.put(projectExecuteId, threadStatus);

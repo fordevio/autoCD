@@ -1,8 +1,6 @@
 package com.fordevio.producer.services;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,7 +13,6 @@ import com.fordevio.producer.services.tasks.ExecutionThreadStatus;
 import com.fordevio.producer.services.tasks.MainExecutionTask;
 import com.fordevio.producer.services.tasks.ProjectStatusMap;
 import com.fordevio.producer.services.tasks.QueueService;
-import com.fordevio.producer.services.tasks.ScriptExecutionTask;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class StartRunner {
-    
-  private final ExecutorService executorService = Executors.newFixedThreadPool(7);
     
     @Autowired
     private UserHandler userHandler;
@@ -83,9 +78,5 @@ public class StartRunner {
         }
         log.info("Project status map created");
     }
-
-    
-    
-
 
 }
