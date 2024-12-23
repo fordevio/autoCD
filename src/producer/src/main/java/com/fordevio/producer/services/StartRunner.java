@@ -11,6 +11,8 @@ import com.fordevio.producer.models.Project;
 import com.fordevio.producer.services.database.ProjectHandler;
 import com.fordevio.producer.services.database.UserHandler;
 import com.fordevio.producer.services.fileIO.FileHandlerSvc;
+import com.fordevio.producer.services.tasks.ExecutionThreadStatus;
+import com.fordevio.producer.services.tasks.MainExecutionTask;
 import com.fordevio.producer.services.tasks.ProjectStatusMap;
 import com.fordevio.producer.services.tasks.QueueService;
 import com.fordevio.producer.services.tasks.ScriptExecutionTask;
@@ -39,6 +41,9 @@ public class StartRunner {
     @Autowired
     private ProjectStatusMap projectStatusMap;
 
+    @Autowired
+    private ExecutionThreadStatus executionThreadStatus;
+
     private int totalThreads=0;
 
     @PostConstruct
@@ -46,7 +51,7 @@ public class StartRunner {
       try{
         createAdminIfNot();
         createProjectStatusMap();
-        createThreadsForScriptExecution();
+        createMainThread();
       }catch(Exception e){
         log.error("Error while init", e);
         throw new RuntimeException("Error while init", e);
@@ -66,11 +71,9 @@ public class StartRunner {
         }
     }
 
-    void createThreadsForScriptExecution(){
-      for (int i = 0; i < 7; i++) {
-        executorService.submit(new ScriptExecutionTask(i, queueService, projectStatusMap, fileHandler));
-        log.info("Thread {} started", i);
-    }
+    void createMainThread(){
+      Thread thread = new Thread(new MainExecutionTask(totalThreads, queueService, projectStatusMap, executionThreadStatus ,fileHandler));
+      thread.start();
     }
 
     void createProjectStatusMap() throws Exception{

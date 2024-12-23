@@ -9,7 +9,7 @@ import com.fordevio.producer.services.fileIO.FileHandlerSvc;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-class MainExecutionTask implements Runnable {
+public class MainExecutionTask implements Runnable {
 
     private int totalThreads;
 
@@ -37,25 +37,32 @@ class MainExecutionTask implements Runnable {
     public void run(){
       while(!Thread.currentThread().isInterrupted()){
         try{
-          int queueSize = queueService.getQueueSize();
+        
           
-          if(queueSize>0&&totalThreads==0){
+          if(queueService.getQueueSize()>0&&totalThreads==0){
+
             Long threadId=randomId();
             Thread thread = new Thread(new ScriptExecutionTask(threadId, queueService, projectStatusMap,executionThreadStatus ,fileHandler));
             thread.start();
             executionThreadStatus.put(threadId, new ThreadStatusModel(thread, false));
+            log.info("Thread created with id: {}, queueSize: {}", threadId, queueService.getQueueSize());
             totalThreads++;
-          }else if(queueSize%(totalThreads*20)>0){
-            int threadsToCreate = (queueSize/(totalThreads*20))+1;
-            for(int i=0; i<threadsToCreate; i++){
+            log.info("Total threads: {}, queueSize: {}", totalThreads, queueService.getQueueSize());
+
+          }else if(queueService.getQueueSize()>0&&totalThreads>0&&queueService.getQueueSize()/(totalThreads*20)>0){
+
+            
             Long threadId=randomId();
             Thread thread = new Thread(new ScriptExecutionTask(threadId, queueService, projectStatusMap ,executionThreadStatus,fileHandler));
+            
             thread.start();
             executionThreadStatus.put(threadId, new ThreadStatusModel(thread, false));
+            log.info("Thread created with id: {}, queueSize: ", threadId, queueService.getQueueSize());
             totalThreads++;
-          }
-        }else if(queueSize <= (totalThreads - 1) * 20){
-          int threadsToRemove = totalThreads - (int) Math.ceil((double) queueSize / 20);
+            log.info("Total threads: {}, queueSize: {}", totalThreads, queueService.getQueueSize());
+
+        }else if(queueService.getQueueSize() <= (totalThreads - 1) * 20){
+          int threadsToRemove = totalThreads - (int) Math.ceil((double) queueService.getQueueSize() / 20);
           List<Long> keysWithRunningFalse = executionThreadStatus.getKeysWithRunningFalse();
           for(Long id: keysWithRunningFalse){
             if(threadsToRemove==0){
@@ -63,15 +70,17 @@ class MainExecutionTask implements Runnable {
             }
             ThreadStatusModel threadStatusModel = executionThreadStatus.get(id);
             if(!threadStatusModel.getRunning()){
-              threadStatusModel.getThread().interrupt();
               executionThreadStatus.remove(id);
+              threadStatusModel.getThread().interrupt();
+              log.info("Thread removed with id: {}, queueSize: {}", id, queueService.getQueueSize());
               threadsToRemove--;
               totalThreads--;
+              log.info("Total threads: {}, queueSize: {}", totalThreads, queueService.getQueueSize());
             }
           }
         }
-          Thread.sleep(5);
-
+          Thread.sleep(2000); // 2 seconds
+          log.info("Main thread running, total threads: {}, queueSize: {}", totalThreads, queueService.getQueueSize());
         }catch(InterruptedException e){
           log.error("Error in main thread", e);
           Thread.currentThread().interrupt();

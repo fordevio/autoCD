@@ -41,8 +41,10 @@ public class ScriptExecutionTask implements Runnable {
     public void run() {
         while(!Thread.currentThread().isInterrupted()){
             try{
-              ThreadStatusModel thread_Status=executionThreadStatus.get(threadId);
-              this.threadStatus = thread_Status;
+              Thread.sleep(100); // 100 ms
+              ThreadStatusModel threadStatus=executionThreadStatus.get(threadId);
+          
+              this.threadStatus = threadStatus;
               threadStatus.setRunning(true);
               executionThreadStatus.put(projectExecuteId, threadStatus);
               ProjectExecute projectExecute = queueService.getProjectFromQueue();
@@ -67,7 +69,6 @@ public class ScriptExecutionTask implements Runnable {
               log.info("Executed script for projec: {}, in thread {}, requested at time: {}, with ID:{}", projectExecute.getProjectName(), threadId, projectExecute.getCreatedDate(), projectExecute.getId());
 
             }catch(InterruptedException e){
-              log.error("Error in thread {}",threadId, e);
               projectStatusMap.put(this.projectId, false);
               Thread.currentThread().interrupt();
               break;
