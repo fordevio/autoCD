@@ -3,6 +3,7 @@ package com.fordevio.producer.services.tasks;
 import java.io.IOException;
 
 import com.fordevio.producer.models.ProjectExecute;
+import com.fordevio.producer.models.ThreadStatusModel;
 import com.fordevio.producer.services.fileIO.FileHandlerSvc;
 
 import lombok.extern.slf4j.Slf4j;
@@ -10,11 +11,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ScriptExecutionTask implements Runnable {
 
-    private final int threadNumber;
+    private final Long threadId;
 
     private QueueService queueService;
    
     private ProjectStatusMap projectStatusMap;
+
+    private ThreadStatusModel threadStatus;
+
+    private ExecutionThreadStatus executionThreadStatus;
 
     private FileHandlerSvc fileHandler;
 
@@ -24,25 +29,29 @@ public class ScriptExecutionTask implements Runnable {
 
     private Long projectExecuteId=0*1L;
 
-    public ScriptExecutionTask(int threadNumber, QueueService queueService, ProjectStatusMap projectStatusMap, FileHandlerSvc fileHandler) {
-        this.threadNumber = threadNumber;
+    public ScriptExecutionTask(Long threadId, QueueService queueService, ProjectStatusMap projectStatusMap,ExecutionThreadStatus executionThreadStatus, FileHandlerSvc fileHandler) {
+        this.threadId = threadId;
         this.queueService = queueService;
         this.projectStatusMap = projectStatusMap;
         this.fileHandler = fileHandler;
-    }
-
-    public ScriptExecutionTask(int threadNumber) {
-        this.threadNumber = threadNumber;
+        this.executionThreadStatus = executionThreadStatus;
     }
 
     @Override
     public void run() {
         while(!Thread.currentThread().isInterrupted()){
             try{
+              ThreadStatusModel thread_Status=executionThreadStatus.get(threadId);
+              this.threadStatus = thread_Status;
+              threadStatus.setRunning(true);
+              executionThreadStatus.put(projectExecuteId, threadStatus);
               ProjectExecute projectExecute = queueService.getProjectFromQueue();
+
               Boolean isProjectRunning = projectStatusMap.get(projectExecute.getProjectId());
               if(isProjectRunning){
                   log.info("Project is already running, so skipping this project: {}", projectExecute.getProjectName());
+                  threadStatus.setRunning(false);
+                  executionThreadStatus.put(projectExecuteId, threadStatus);
                   continue;
               }
               projectStatusMap.put(projectExecute.getProjectId(), true);
@@ -53,16 +62,20 @@ public class ScriptExecutionTask implements Runnable {
               String logFilePath = "/var/autocd/logs/"+projectExecute.getProjectId()+".log";
               fileHandler.executeShellScript(scriptFilePath, logFilePath);    
               projectStatusMap.put(projectExecute.getProjectId(), false); 
-              log.info("Executed script for projec: {}, in thread {}, requested at time: {}, with ID:{}", projectExecute.getProjectName(), threadNumber, projectExecute.getCreatedDate(), projectExecute.getId());
+              threadStatus.setRunning(false);
+              executionThreadStatus.put(projectExecuteId, threadStatus);
+              log.info("Executed script for projec: {}, in thread {}, requested at time: {}, with ID:{}", projectExecute.getProjectName(), threadId, projectExecute.getCreatedDate(), projectExecute.getId());
 
             }catch(InterruptedException e){
-              log.error("Error in thread {}",threadNumber, e);
+              log.error("Error in thread {}",threadId, e);
               projectStatusMap.put(this.projectId, false);
               Thread.currentThread().interrupt();
               break;
             }catch(IOException e){
               projectStatusMap.put(this.projectId, false);
-              log.error("Error in thread {}, while executing the project: {}, and projectExcutionId: {}",threadNumber,this.projectName, this.projectExecuteId,e);
+              threadStatus.setRunning(false);
+              executionThreadStatus.put(projectExecuteId, threadStatus);
+              log.error("Error in thread {}, while executing the project: {}, and projectExcutionId: {}",threadId,this.projectName, this.projectExecuteId,e);
             }
         }
     }

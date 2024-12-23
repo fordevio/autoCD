@@ -1,5 +1,11 @@
 package com.fordevio.producer.services.tasks;
 
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
+import com.fordevio.producer.models.ThreadStatusModel;
+import com.fordevio.producer.services.fileIO.FileHandlerSvc;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -9,9 +15,22 @@ class MainExecutionTask implements Runnable {
 
     private QueueService queueService;
 
-    public MainExecutionTask(int totalThreads, QueueService queueService){
+    private ProjectStatusMap projectStatusMap;
+
+    private ExecutionThreadStatus executionThreadStatus;
+
+    private FileHandlerSvc fileHandler;
+
+    public MainExecutionTask(int totalThreads, QueueService queueService, ProjectStatusMap projectStatusMap,ExecutionThreadStatus executionThreadStatus ,FileHandlerSvc fileHandlerSvc){
         this.queueService=queueService;
         this.totalThreads=totalThreads;
+        this.fileHandler=fileHandlerSvc;
+        this.projectStatusMap=projectStatusMap;
+        this.executionThreadStatus=executionThreadStatus;
+    }
+
+    private static Long randomId(){
+      return  ThreadLocalRandom.current().nextInt(1000, 10000)*1L;
     }
 
     @Override
@@ -21,15 +40,34 @@ class MainExecutionTask implements Runnable {
           int queueSize = queueService.getQueueSize();
           
           if(queueSize>0&&totalThreads==0){
-            Thread thread = new Thread(new ScriptExecutionTask(totalThreads+1));
+            Long threadId=randomId();
+            Thread thread = new Thread(new ScriptExecutionTask(threadId, queueService, projectStatusMap,executionThreadStatus ,fileHandler));
             thread.start();
+            executionThreadStatus.put(threadId, new ThreadStatusModel(thread, false));
             totalThreads++;
           }else if(queueSize%(totalThreads*20)>0){
             int threadsToCreate = (queueSize/(totalThreads*20))+1;
             for(int i=0; i<threadsToCreate; i++){
-            Thread thread = new Thread(new ScriptExecutionTask(totalThreads+1));
+            Long threadId=randomId();
+            Thread thread = new Thread(new ScriptExecutionTask(threadId, queueService, projectStatusMap ,executionThreadStatus,fileHandler));
             thread.start();
+            executionThreadStatus.put(threadId, new ThreadStatusModel(thread, false));
             totalThreads++;
+          }
+        }else if(queueSize <= (totalThreads - 1) * 20){
+          int threadsToRemove = totalThreads - (int) Math.ceil((double) queueSize / 20);
+          List<Long> keysWithRunningFalse = executionThreadStatus.getKeysWithRunningFalse();
+          for(Long id: keysWithRunningFalse){
+            if(threadsToRemove==0){
+              break;
+            }
+            ThreadStatusModel threadStatusModel = executionThreadStatus.get(id);
+            if(!threadStatusModel.getRunning()){
+              threadStatusModel.getThread().interrupt();
+              executionThreadStatus.remove(id);
+              threadsToRemove--;
+              totalThreads--;
+            }
           }
         }
           Thread.sleep(5);
