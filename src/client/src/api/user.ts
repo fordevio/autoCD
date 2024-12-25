@@ -20,6 +20,7 @@ export const getUsers = async():Promise<UserModel[]> =>{
             Authorization: `Bearer ${token}`
         }
     })
+
     return response.data;
 }
 
