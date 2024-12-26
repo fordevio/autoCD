@@ -116,14 +116,14 @@ const User = () => {
              <input
               type="checkbox"
               checked={admin}
-              onClick={()=>setAdmin(!admin)}
+              onChange={(e)=>setAdmin(!admin)}
               />
               <span>ADMIN    </span>
 
               <input
               type="checkbox"
               checked={member}
-              onClick={()=>setMember(!member)}
+              onChange={(e)=>setMember(!member)}
               />
               <span>MEMBER    </span>
 
@@ -134,21 +134,21 @@ const User = () => {
              <input
               type="checkbox"
               checked={read}
-              onClick={()=>setRead(!read)}
+              onChange={(e)=>setRead(!read)}
               />
               <span>READ    </span>
 
               <input
               type="checkbox"
               checked={write}
-              onClick={()=>setWrite(!write)}
+              onChange={(e)=>setWrite(!write)}
               />
               <span>WRITE    </span>
 
               <input
               type="checkbox"
               checked={del}
-              onClick={()=>setDel(!del)}
+              onChange={(e)=>setDel(!del)}
               />
               <span>DELETE   </span>
 

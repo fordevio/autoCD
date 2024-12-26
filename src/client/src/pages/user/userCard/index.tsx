@@ -58,7 +58,7 @@ const UserCard :React.FC<Props>= ({user, users, setUsers}) => {
     })
   }
 
-  const submitHandler=async()=>{
+  const submitFunc=async()=>{
     if(username===""||password==="" || (!admin && !member) || (!read && !write && !del)){
       toast.error("Please fill all fields")
       return;
@@ -78,28 +78,29 @@ const UserCard :React.FC<Props>= ({user, users, setUsers}) => {
       
       setUsers(users.filter((u)=>{
         if(user.id===u.id){
-          u.username=username,
-          u.password=password,
-          u.permissions=members,
+          u.username=username
+          u.password=password
+          u.permissions=members
           u.roles=roles
           return  u;
         }
         return u;
       }))
-      setUsers(users, )
-      setUsers([...users, response])
+  
       setOpen(false)
-      setUsername("")
-      setPassword("")
-      setAdmin(false)
-      setMember(false)
-      setRead(false)
-      setWrite(false)
-      setDel(false)
 
     }catch(e:any){
       throw e.response ? e.response.data : { error: 'Request failed' };
     }
+  }
+
+  const submitHandler = async()=>{
+    toast.promise(submitFunc(), {
+      loading: 'Updating user...',
+      success: 'User updated',
+      error: data => `${data.message}`,
+    }
+    )
   }
 
   return (
@@ -148,14 +149,14 @@ const UserCard :React.FC<Props>= ({user, users, setUsers}) => {
              <input
               type="checkbox"
               checked={admin}
-              onClick={()=>setAdmin(!admin)}
+              onChange={(e)=>setAdmin(!admin)}
               />
               <span>ADMIN    </span>
 
               <input
               type="checkbox"
               checked={member}
-              onClick={()=>setMember(!member)}
+              onChange={(e)=>setMember(!member)}
               />
               <span>MEMBER    </span>
 
@@ -166,21 +167,21 @@ const UserCard :React.FC<Props>= ({user, users, setUsers}) => {
              <input
               type="checkbox"
               checked={read}
-              onClick={()=>setRead(!read)}
+              onChange={(e)=>setRead(!read)}
               />
               <span>READ    </span>
 
               <input
               type="checkbox"
               checked={write}
-              onClick={()=>setWrite(!write)}
+              onChange={(e)=>setWrite(!write)}
               />
               <span>WRITE    </span>
 
               <input
               type="checkbox"
               checked={del}
-              onClick={()=>setDel(!del)}
+              onChange={(e)=>setDel(!del)}
               />
               <span>DELETE   </span>
 
