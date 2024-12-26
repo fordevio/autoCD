@@ -42,9 +42,12 @@ const User = () => {
       setOpen(false)
       setUsername("")
       setPassword("")
+      setAdmin(false)
+      setMember(false)
       setRead(false)
       setWrite(false)
       setDel(false)
+
     }catch(e:any){
       throw e.response ? e.response.data : { error: 'Request failed' };
     }
@@ -77,7 +80,7 @@ const User = () => {
     <div className="user-page">
         <button className="user-btn" onClick={()=>setOpen(true)}>Create User</button>
       <div className="grid-container">
-       {users.map((user, index)=><UserCard key={index}  user={user}/>)}
+       {users.map((user, index)=><UserCard key={index}  user={user} users={users} setUsers={setUsers}/>)}
       </div>
       <div
           className="popup-overlay"
@@ -112,35 +115,39 @@ const User = () => {
              <p>Roles* </p>
              <input
               type="checkbox"
+              checked={admin}
               onClick={()=>setAdmin(!admin)}
               />
               <span>ADMIN    </span>
 
               <input
               type="checkbox"
+              checked={member}
               onClick={()=>setMember(!member)}
               />
               <span>MEMBER    </span>
 
-      
              </div>
            
              <div>
              <p>Permissions* </p>
              <input
               type="checkbox"
+              checked={read}
               onClick={()=>setRead(!read)}
               />
               <span>READ    </span>
 
               <input
               type="checkbox"
+              checked={write}
               onClick={()=>setWrite(!write)}
               />
               <span>WRITE    </span>
 
               <input
               type="checkbox"
+              checked={del}
               onClick={()=>setDel(!del)}
               />
               <span>DELETE   </span>
