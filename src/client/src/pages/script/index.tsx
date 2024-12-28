@@ -8,6 +8,7 @@ import MonacoEditor, { OnChange, OnMount } from "@monaco-editor/react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { getHost } from "../../utils/utils";
+import { getAuthToken } from "../../api/token";
 
 const Script = () => {
   const { id } = useParams();
@@ -17,7 +18,7 @@ const Script = () => {
   const [script, setScript] = useState<string>("")
   const [newScript, setNewScript] = useState<string>("")
   const [edit, setEdit] = useState<boolean>(false)
-
+  const [token, setToken] = useState<string>("")
   const fetch = async()=>{
      try{
            const projectRes= await getProject(numericId)
@@ -69,11 +70,12 @@ const Script = () => {
     })
   }
 
-  const getToken=async()=>{
+  const getToke_n=async()=>{
     try{
-    
+      const res=await getAuthToken()
+      setToken(res.token)
     }catch(e){
-
+      
     }
   }
   useEffect(()=>{
@@ -115,7 +117,7 @@ const Script = () => {
       </div>
       <div>
         <div>
-            <Link to="/" >Get Logs</Link>
+            <Link to={`/logs/${project?.id}`} className="log-btn" >Get Logs</Link>
         </div>
         <div>
             <h2 className="cd-h1">CD Request</h2>
@@ -128,12 +130,14 @@ const Script = () => {
       </p>
                
         </div>
-         <div>
-            <button className="token-btn" onClick={getToken}>Get Auth Token</button>
-            <p></p>
-         </div>
+        
         </div>
       </div>
+      <div>
+            <button className="token-btn" onClick={()=>getToke_n()}>Get Auth Token</button>
+
+         </div>
+         <p><span>Token: </span>{token}</p>
       </div>
   )
 }

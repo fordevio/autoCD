@@ -49,3 +49,13 @@
     background-color: rgb(149, 203, 228);
 
 }
+
+.log-btn{
+    text-decoration: none;
+    color: black;
+    font-size: larger;
+    padding: 5px 5px;
+    border-radius: 5px;
+    border: 2px solid rgb(96, 96, 230);
+    background-color: rgb(105, 192, 233);
+}
