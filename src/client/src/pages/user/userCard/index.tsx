@@ -82,9 +82,8 @@ const UserCard :React.FC<Props>= ({user, users, setUsers}) => {
           u.password=password
           u.permissions=members
           u.roles=roles
-          return  u;
         }
-        return u;
+        return false;
       }))
   
       setOpen(false)

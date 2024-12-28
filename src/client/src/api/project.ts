@@ -35,7 +35,7 @@ export const addProject = async(name: string, description: string):Promise<Proje
 }
 
 export const editProject = async(id:Number, name: string, description: string):Promise<ProjectModel>=>{
-    const response = await axios.put<ProjectModel>(`${url}/api/protected/project/edit/${id}`, {
+    const response = await axios.put<ProjectModel>(`${url}/api/protected/project/update/${id}`, {
         name: name,
         description: description
     }, {
