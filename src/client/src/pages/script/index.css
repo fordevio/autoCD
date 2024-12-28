@@ -1,0 +1,51 @@
+
+.project-h1{
+    text-align: center;
+    color: rgb(24, 104, 158);
+}
+
+.script-page{
+
+     
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    flex-direction: column;
+    align-items: center;    
+}
+.editor{    display: flex;
+    justify-content: center;
+    width: 80%;
+   
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center;    /* Centers vertically */
+    border: 2px solid rgb(81, 81, 202);
+    border-radius: 5px;
+  
+}
+
+.editor-btn{
+    margin: 5px 5px;
+    padding: 4px 4px;
+    background-color: rgb(122, 179, 218);
+}
+
+.cd-h1{
+    text-align: center;
+}
+
+.cd-command{
+    color: white;
+    background-color: black;
+    padding: 5px 5px;
+    border-radius: 5px;
+}
+
+.token-btn{
+    margin: 3px auto;
+    background-color: rgb(149, 203, 228);
+
+}

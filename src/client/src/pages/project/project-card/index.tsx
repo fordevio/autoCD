@@ -3,6 +3,7 @@ import { ProjectModel } from "../../../models/project"
 import "./index.css"
 import { deleteProject, editProject } from "../../../api/project"
 import toast from "react-hot-toast"
+import { Link } from "react-router-dom"
 
 interface Props{
     project: ProjectModel,
@@ -72,7 +73,7 @@ const ProjectCard:React.FC<Props> = ({project, projects, setProjects}) => {
     <div>
       <button className="card-btn" onClick={()=>setOpen(true)}>Edit</button>
       <button className="card-btn" onClick={DeleteHandler}>Delete</button>
-      <button className="card-btn" >Read more</button>
+      <Link to={`/project/${project.id}`} className="readmore" >Read more</Link>
     </div>
     <div
           className="popup-overlay"

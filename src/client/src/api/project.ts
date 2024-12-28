@@ -45,3 +45,12 @@ export const editProject = async(id:Number, name: string, description: string):P
     })
     return response.data
 }
+
+export const getProject = async(id: Number):Promise<ProjectModel> =>{
+    const res = await axios.get<ProjectModel>(`${url}/api/protected/project/get/${id}`,{
+        headers:{
+            "Authorization": `Bearer ${token}`
+        }
+    })
+    return res.data;
+}
