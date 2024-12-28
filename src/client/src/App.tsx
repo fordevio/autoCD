@@ -10,6 +10,7 @@ import { getCurrentUser } from "./api/user";
 import { CurrentUser } from "./models/user";
 import User from "./pages/user";
 import Script from "./pages/script";
+import Logs from "./pages/logs";
 
 function App() {
   const navigate = useNavigate();
@@ -50,6 +51,7 @@ function App() {
       <Route path="/login" element={<Login/>} />
       <Route path="/users" element={<User/>}/>
       <Route path="/project/:id"  element={<Script/>}/>
+      <Route path="/logs/:id" element={<Logs/>}/>
       </Routes>
     </div>
   );
