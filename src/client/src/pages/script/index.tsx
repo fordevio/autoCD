@@ -113,12 +113,11 @@ const Script = () => {
       {!edit&&<button className="editor-btn" onClick={()=>setEdit(true)}>Edit</button>}
       {edit&&<button className="editor-btn" onClick={handleCancel}>Cancel</button>}
       {edit&&<button className="editor-btn" onClick={saveHandler}>Save</button>}
+      <Link to={`/logs/${project?.id}`} className="log-btn" >Get Logs</Link>
       </div>
       </div>
       <div>
-        <div>
-            <Link to={`/logs/${project?.id}`} className="log-btn" >Get Logs</Link>
-        </div>
+  
         <div>
             <h2 className="cd-h1">CD Request</h2>
             <div className="cd-command">
