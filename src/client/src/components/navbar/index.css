@@ -28,3 +28,16 @@
     font-weight: 700;
     padding: 10px 10px;
 }
+
+.btn-logout{
+    background-color: rgb(11, 78, 155);
+    color: white;
+    /* margin: 600px auto;
+    float: right; */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0px 10px;
+}
