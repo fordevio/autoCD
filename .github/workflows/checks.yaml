@@ -1,0 +1,48 @@
+name: checks
+on: 
+  pull_request:
+    paths-ignore:
+      - '**/*.md'
+  push:
+    branches:
+      - master
+      - main
+      - develop
+      - 'release-*'
+    tags:
+      - 'v*'
+    paths-ignore:
+       - '**/*.md'
+      
+jobs:
+
+
+  format-typescript: 
+    runs-on:  ubuntu-latest
+    name: Format TypeScript code 
+    steps: 
+     - uses: actions/checkout@v4
+     - name: Import environment variables from file
+       run: cat ".github/env" >> $GITHUB_ENV
+     - uses: actions/setup-node@v2
+       with:
+         node-version: '${{ env.node-version }}'
+     - run: npm --prefix ./src/client install
+     - run: npm --prefix ./src/client run format
+     - run: git diff --exit-code
+
+
+
+  build-typescript: 
+    runs-on:  ubuntu-latest
+    name: build TypeScript code 
+    steps: 
+     - uses: actions/checkout@v4
+     - name: Import environment variables from file
+       run: cat ".github/env" >> $GITHUB_ENV
+     - uses: actions/setup-node@v2
+       with:
+         node-version: '${{ env.node-version }}'
+     - run: npm --prefix ./src/client install
+     - run: mkdir bin
+     - run: npm --prefix ./src/client run build
