@@ -35,6 +35,13 @@ It is a platform to provide automation to CD in monolythic server.
 
 Use the value of version you want to install
 
+- Stop running autocd
+
+```
+PID=$(sudo lsof -t -i :5001)
+sudo kill -9 $PID
+```
+
 ```
 VERSION=1.0.0
 wget https://github.com/fordevio/autoCD/releases/download/v$VERSION/autocd-$VERSION.zip
@@ -46,10 +53,3 @@ Output of the application is seen output.log
 
 # Contributing to autoCD
  Visit [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for contributions guidlines. 
-
-- Stop running autocd
-
-```
-PID=$(sudo lsof -t -i :5001)
-sudo kill -9 $PID
-```
