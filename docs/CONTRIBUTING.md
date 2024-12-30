@@ -8,10 +8,10 @@ menu:
 lead: ""
 images: []
 draft: false
-description: How can I contribute to the wharf?
+description: How can I contribute to the autoCD?
 ---
 
-This project is licensed under the [Apache 2.0 license](LICENSE) and accept
+This project is licensed under the [Apache 2.0 license](../LICENSE) and accept
 contributions via GitHub pull requests. This document outlines some of the
 conventions on development workflow, commit message formatting, contact points
 and other resources to make it easier to get your contribution accepted.
@@ -29,7 +29,7 @@ contribution. See the [DCO](DCO) file for details.
 # Email and Chat
 
 The project currently uses the [forDEV-io Slack](https://fordev-io.slack.com):
-- [#autoCD](https://fordev-io.slack.com/archives/C07NTF2R6KF)
+- [#autoCD](https://fordev-io.slack.com/archives/C086UJZ4658)
 
 Please avoid emailing maintainers found in the MAINTAINERS file directly. They
 are very busy and read the mailing lists.
@@ -58,14 +58,11 @@ Thanks for your contributions!
 
 ## Directory structure
 - **assets**: contains different assets used in documentation.
-- **client**: contains reactjs code for user interface.
-- **cmd** : contains entrypoint of the application.
-- **conf** : contains configuration files for the application.
-- **deployment** : contains deployments files to be used during deployment.
+- **src**: contains source code of application.
 - **docs** : contains docs for the application.
-- **internal**: contains internal go packages which contains api definitions.
-- **pkg**: contains go packages to to be used by internal packages.
-- **test**: contains integration tests.
+- **src/client/**: contains reactjs code.
+- **src/producer**: contains producer backend java code.
+- **src/producer/src/test**: contains integration tests.
 
 ### Format of the Commit Message
 
@@ -104,7 +101,7 @@ See [DEVELOPMENT](./DEVELOPMENT.md)
 
 # Proposal Process
 
-The wharf project accepts proposals for new features,
+The autocd project accepts proposals for new features,
 enhancements and design documents. The document should be created in the
 `Documentation/proposals` directory using the template below, prefixed by
 `<YEAR><MONTH>-` and submitted in the form of a GitHub Pull Request.

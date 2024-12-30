@@ -33,6 +33,8 @@ It is a platform to provide automation to CD in monolythic server.
 
 - Install and run autoCD
 
+Use the value of version you want to install
+
 ```
 VERSION=1.0.0
 wget https://github.com/fordevio/autoCD/releases/download/v$VERSION/autocd-$VERSION.zip
@@ -41,3 +43,6 @@ sudo nohup java -jar autocd-$VERSION.jar > output.log 2>&1 &
 ```
 The application is running in http://localhost:5001
 Output of the application is seen output.log
+
+# Contributing to autoCD
+ Visit [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for contributions guidlines. 
