@@ -46,3 +46,10 @@ Output of the application is seen output.log
 
 # Contributing to autoCD
  Visit [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for contributions guidlines. 
+
+- Stop running autocd
+
+```
+PID=$(sudo lsof -t -i :5001)
+sudo kill -9 $PID
+```
