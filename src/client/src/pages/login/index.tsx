@@ -37,7 +37,7 @@ const Login = () => {
   return (
     <>
       <div className="log-div">
-        <img className="logo" src={logo} />
+        <img className="logo" src={logo} alt="autocd"/>
         <div className="input-div">
           <div className="input">
             <span className="input-box">Username: </span>

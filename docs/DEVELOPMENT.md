@@ -44,4 +44,4 @@ The application can be acessed by the url `http://localhost:5001`, the react app
 Run `make help` to get all the make commands.
 
 ## API Refs:
-Api reference can be found in `http://localhost:9001/docs/api` after running the project.
+Api reference can be found in [Postman collection](./autocd.postman_collection.json) .

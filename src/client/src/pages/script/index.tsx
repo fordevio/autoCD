@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { ProjectModel } from '../../models/project';
 import { getProject } from '../../api/project';
 import { getScript, updateScript } from '../../api/script';
-import MonacoEditor, { OnChange, OnMount } from '@monaco-editor/react';
+import MonacoEditor from '@monaco-editor/react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { getHost } from '../../utils/utils';

@@ -77,7 +77,7 @@ const UserCard: React.FC<Props> = ({ user, users, setUsers }) => {
         write ? 'WRITE' : null,
         del ? 'DELETE' : null,
       ].filter((value): value is string => Boolean(value));
-      const response = await updateUser(
+      await updateUser(
         user.id,
         username,
         password,
