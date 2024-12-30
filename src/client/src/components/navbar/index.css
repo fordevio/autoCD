@@ -1,43 +1,41 @@
-
-.navbar{
-    height: 80px;
-    background-color: rgb(85, 186, 233);
-    display: flex;
-    ;
+.navbar {
+  height: 80px;
+  background-color: rgb(85, 186, 233);
+  display: flex;
 }
 
-.navbar-logo{
-    height: 70px;
-    width: 70px;
-    padding: 2px 2px;
+.navbar-logo {
+  height: 70px;
+  width: 70px;
+  padding: 2px 2px;
 }
 
-.nav-h1{
-    color: rgb(11, 33, 97);
+.nav-h1 {
+  color: rgb(11, 33, 97);
 }
 
-.nav-links{
-    padding: 3px 3px;
-    margin: auto 100px;
+.nav-links {
+  padding: 3px 3px;
+  margin: auto 100px;
 }
 
 .link {
-    color: rgb(11, 78, 155);
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: 700;
-    padding: 10px 10px;
+  color: rgb(11, 78, 155);
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 10px 10px;
 }
 
-.btn-logout{
-    background-color: rgb(11, 78, 155);
-    color: white;
-    /* margin: 600px auto;
+.btn-logout {
+  background-color: rgb(11, 78, 155);
+  color: white;
+  /* margin: 600px auto;
     float: right; */
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 20px;
-    font-weight: 700;
-    margin: 0px 10px;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0px 10px;
 }
