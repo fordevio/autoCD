@@ -4,17 +4,12 @@ build: get
 run:
 	@mvn -f ./src/producer/pom.xml spring-boot:run
 
-get:
-	@npm --prefix ./src/client install
-
 test:
 	@mvn -f ./src/producer/pom.xml test
 
-format:
-	@npm --prefix ./src/client run format
+format: buildClientDevImage
+	@docker run -it --rm -v $(shell pwd)/src/client/:/app -p 3000:3000 autocd-client /bin/bash -c "npm run format" 
 	
-runReact: 
-	@npm --prefix ./src/client start
 
 buildProducerDevImage:
 	@docker build -t autocd-producer -f ./src/producer/Dockerfile.dev ./src/producer/
@@ -22,10 +17,10 @@ buildProducerDevImage:
 buildClientDevImage: get
 	@docker build -t autocd-client -f ./src/client/Dockerfile.dev ./src/client/
 
-runProducerDevContainer:
+runProducerDevContainer: runProducerDevContainer
 	@docker run -it --rm -v $(shell pwd)/src/producer/:/app -v /var/autocd:/var/autocd -p 5001:5001 autocd-producer /bin/bash -c "mvn spring-boot:run" 
 
-runClientDevImage:
+runClientDevImage: buildClientDevImage
 	@docker run -it --rm -v $(shell pwd)/src/client/:/app -p 3000:3000 autocd-client /bin/bash -c "npm run start" 
 
 
@@ -37,7 +32,6 @@ help:
 	@echo "  make buildClientDevImage     - Build client dev image"
 	@echo "  make runClientDevImage"      - Run client dev image"
 	@echo "  make run                     - Run the application"
-	@echo "  make runReact                - Run the frontend on port 3000"
 	@echo "  make get                     - Install dependencies"
 	@echo "  make format                  - Format code"
 	@echo "  make test                    - Run all test"
