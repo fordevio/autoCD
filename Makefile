@@ -10,6 +10,9 @@ get:
 test:
 	@mvn -f ./src/producer/pom.xml test
 
+format:
+	@npm --prefix ./src/client run format
+	
 runReact: 
 	@npm --prefix ./src/client start
 
