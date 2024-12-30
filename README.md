@@ -31,3 +31,13 @@ It is a platform to provide automation to CD in monolythic server.
    apt install openjdk-17-jdk openjdk-17-jre
    ```
 
+- Install and run autoCD
+
+```
+VERSION=1.0.0
+wget https://github.com/fordevio/autoCD/releases/download/v$VERSION/autocd-$VERSION.zip
+unzip autocd-$VERSION.zip
+sudo nohup java -jar autocd-$VERSION.jar > output.log 2>&1 &
+```
+The application is running in http://localhost:5001
+Output of the application is seen output.log
