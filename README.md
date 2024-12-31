@@ -11,6 +11,9 @@ It is a platform to provide automation to CD in monolythic server.
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 
+# Project Status
+Current the version 1.0.0 is released with the features below, upcoming relases will work on solving frontend bugs and inproving UI.
+
 # Features
  - Maintain users
  - Maintain users permissions
@@ -35,12 +38,6 @@ It is a platform to provide automation to CD in monolythic server.
 
 Use the value of version you want to install
 
-- Stop running autocd
-
-```
-PID=$(sudo lsof -t -i :5001)
-sudo kill -9 $PID
-```
 
 ```
 VERSION=1.0.0
@@ -55,6 +52,14 @@ Admin credintials:
 Change admin credentials after first login.
 
 The application is running in http://localhost:5001, Logs of autocd can be seen in output.log
+
+- Stop running autocd
+
+```
+PID=$(sudo lsof -t -i :5001)
+sudo kill -9 $PID
+```
+
 
 # Contributing to autoCD
  Visit [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for contributions guidlines. 
