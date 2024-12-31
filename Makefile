@@ -17,7 +17,7 @@ buildProducerDevImage:
 buildClientDevImage: get
 	@docker build -t autocd-client -f ./src/client/Dockerfile.dev ./src/client/
 
-runProducerDevContainer: runProducerDevContainer
+runProducerDevContainer: buildProducerDevImage
 	@docker run -it --rm -v $(shell pwd)/src/producer/:/app -v /var/autocd:/var/autocd -p 5001:5001 autocd-producer /bin/bash -c "mvn spring-boot:run" 
 
 runClientDevImage: buildClientDevImage

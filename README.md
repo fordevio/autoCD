@@ -48,8 +48,16 @@ wget https://github.com/fordevio/autoCD/releases/download/v$VERSION/autocd-$VERS
 unzip autocd-$VERSION.zip
 sudo nohup java -jar autocd-$VERSION.jar > output.log 2>&1 &
 ```
-The application is running in http://localhost:5001
-Output of the application is seen output.log
+Admin credintials:
+- Username: "admin"
+- Password: "admin"
+
+Change admin credentials after first login.
+
+The application is running in http://localhost:5001, Logs of autocd can be seen in output.log
 
 # Contributing to autoCD
  Visit [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for contributions guidlines. 
+
+# Acknowledgements
+autoCD logo is generated using ChatGPT.

@@ -31,11 +31,12 @@ git clone https://github.com/fordevio/autoCD.git
 ## Go to the wharf directory
 cd autoCD
 
-## Make docker image
-make dockerImage
+## Run docker container for java backend development
+make runProducerDevContainer
 
-## Run docker container
-make runDockerWharf
+## Run docker container for frontend react development on different terminal
+make runClientDevImage
+ 
 ```
 
 The application can be acessed by the url `http://localhost:5001`, the react application can be accessed by the url `http://localhost:3000` on browser
