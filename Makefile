@@ -4,9 +4,6 @@ build: buildFrontend buildProducerDevImage
 buildFrontend:
 	@docker run -it --rm -v $(shell pwd)/:/app -p 3000:3000 autocd-client /bin/bash -c "npm --prefix ./src/client install && npm --prefix ./src/client run build"
 
-build: 
-	@npm --prefix ./src/client run build  && mvn -f ./src/producer/pom.xml clean install -DskipTests -Dmaven.test.skip=true
-
 run:
 	@mvn -f ./src/producer/pom.xml spring-boot:run
 
