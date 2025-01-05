@@ -134,7 +134,7 @@ const Script = () => {
             <p>
               curl -X POST \<br />
               -H "Content-Type: application/json" \<br />
-              {`${getHost()}/api/protected/deliver/${project?.name}?token="your-auth-token"`}
+              {`${getHost()}/api/deliver/${project?.name}?token="your-auth-token"`}
             </p>
           </div>
         </div>
