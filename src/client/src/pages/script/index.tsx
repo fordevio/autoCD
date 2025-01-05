@@ -133,9 +133,8 @@ const Script = () => {
           <div className="cd-command">
             <p>
               curl -X POST \<br />
-              -H "Authorization: Bearer your-auth-token" \<br />
               -H "Content-Type: application/json" \<br />
-              {`${getHost()}/api/protected/deliver/${project?.name}`}
+              {`${getHost()}/api/protected/deliver/${project?.name}?token="your-auth-token"`}
             </p>
           </div>
         </div>
