@@ -33,7 +33,6 @@ export const getUsers = async (): Promise<UserModel[]> => {
 export const createUser = async (
   username: string,
   password: string,
-  roles: string[],
   permissions: string[]
 ): Promise<UserModel> => {
   const response = await axios.post<UserModel>(
@@ -41,7 +40,6 @@ export const createUser = async (
     {
       username: username,
       password: password,
-      roles: roles,
       permissions: permissions,
     },
     {
@@ -57,7 +55,6 @@ export const updateUser = async (
   id: number,
   username: string,
   password: string,
-  roles: string[],
   permissions: string[]
 ): Promise<UserModel> => {
   const response = await axios.put<UserModel>(
@@ -65,7 +62,6 @@ export const updateUser = async (
     {
       username: username,
       password: password,
-      roles: roles,
       permissions: permissions,
     },
     {

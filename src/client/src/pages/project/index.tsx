@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './index.css';
 import { ProjectModel } from '../../models/project';
 import { addProject, getAllProjects } from '../../api/project';
 import ProjectCard from './project-card';
 import toast from 'react-hot-toast';
+import { useQuery } from 'react-query';
 
 const Projects = () => {
   const [projects, setProjects] = useState<ProjectModel[]>([]);
@@ -41,9 +42,9 @@ const Projects = () => {
       error: data => `${data.message}`,
     });
   };
-  useEffect(() => {
-    fetchProjects();
-  }, []);
+  useQuery('projects', fetchProjects, {
+    retry: false,
+  });
   return (
     <div className="project-page">
       <button className="project-btn" onClick={() => setOpen(true)}>

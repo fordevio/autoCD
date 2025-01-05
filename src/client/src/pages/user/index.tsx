@@ -1,17 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './index.css';
 import { UserModel } from '../../models/user';
 import { createUser, getUsers } from '../../api/user';
 import UserCard from './userCard';
 import toast from 'react-hot-toast';
+import { useQuery } from 'react-query';
 
 const User = () => {
   const [users, setUsers] = useState<UserModel[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [admin, setAdmin] = useState<boolean>(false);
-  const [member, setMember] = useState<boolean>(false);
   const [read, setRead] = useState<boolean>(false);
   const [write, setWrite] = useState<boolean>(false);
   const [del, setDel] = useState<boolean>(false);
@@ -25,22 +24,16 @@ const User = () => {
 
   const submitFunc = async () => {
     try {
-      const roles = [admin ? 'ADMIN' : null, member ? 'MEMBER' : null].filter(
-        (value): value is string => Boolean(value)
-      );
-
       const members = [
         read ? 'READ' : null,
         write ? 'WRITE' : null,
         del ? 'DELETE' : null,
       ].filter((value): value is string => Boolean(value));
-      const response = await createUser(username, password, roles, members);
+      const response = await createUser(username, password, members);
       setUsers([...users, response]);
       setOpen(false);
       setUsername('');
       setPassword('');
-      setAdmin(false);
-      setMember(false);
       setRead(false);
       setWrite(false);
       setDel(false);
@@ -49,12 +42,7 @@ const User = () => {
     }
   };
   const submitHandler = async () => {
-    if (
-      username === '' ||
-      password === '' ||
-      (!admin && !member) ||
-      (!read && !write && !del)
-    ) {
+    if (username === '' || password === '' || (!read && !write && !del)) {
       toast.error('Please fill all fields');
       return;
     }
@@ -69,9 +57,9 @@ const User = () => {
     });
   };
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  useQuery('users', fetchUsers, {
+    retry: false,
+  });
 
   return (
     <div className="user-page">
@@ -112,22 +100,6 @@ const User = () => {
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
-            <div>
-              <p>Roles* </p>
-              <input
-                type="checkbox"
-                checked={admin}
-                onChange={e => setAdmin(!admin)}
-              />
-              <span>ADMIN </span>
-
-              <input
-                type="checkbox"
-                checked={member}
-                onChange={e => setMember(!member)}
-              />
-              <span>MEMBER </span>
-            </div>
 
             <div>
               <p>Permissions* </p>

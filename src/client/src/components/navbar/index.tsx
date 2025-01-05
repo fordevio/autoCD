@@ -1,7 +1,7 @@
 import './index.css';
 import logo from '../../assets/autocd-logo.png';
 import { CurrentUser } from '../../models/user';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 interface Prop {
@@ -11,7 +11,6 @@ interface Prop {
 
 const Navbar: React.FC<Prop> = ({ currUser, setCurrUser }) => {
   const navigate = useNavigate();
-  useEffect(() => {}, [currUser, setCurrUser]);
   const logoutHandler = () => {
     setCurrUser(null);
     localStorage.removeItem('token');

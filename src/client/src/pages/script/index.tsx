@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import './index.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ProjectModel } from '../../models/project';
 import { getProject } from '../../api/project';
 import { getScript, updateScript } from '../../api/script';
@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { getHost } from '../../utils/utils';
 import { getAuthToken } from '../../api/token';
+import { useQuery } from 'react-query';
 
 const Script = () => {
   const { id } = useParams();
@@ -72,9 +73,9 @@ const Script = () => {
       setToken(res.token);
     } catch (e) {}
   };
-  useEffect(() => {
-    fetch();
-  }, []);
+  useQuery('script', fetch, {
+    retry: false,
+  });
 
   return (
     <div className="script-page">

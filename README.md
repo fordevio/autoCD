@@ -51,6 +51,8 @@ Admin credintials:
 
 Change admin credentials after first login.
 
+Admin credential is stored in the file "/var/autocd/admin-credential.json", in case you forgot. 
+
 The application is running in http://localhost:5001, Logs of autocd can be seen in output.log
 
 - Stop running autocd

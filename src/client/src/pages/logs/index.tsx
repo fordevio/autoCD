@@ -1,8 +1,9 @@
 import { useParams } from 'react-router-dom';
 import './index.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getLogs } from '../../api/logs';
 import MonacoEditor from '@monaco-editor/react';
+import { useQuery } from 'react-query';
 const Logs = () => {
   const { id } = useParams();
   const [logs, setLogs] = useState<string>('');
@@ -16,9 +17,9 @@ const Logs = () => {
     } catch (e) {}
   };
 
-  useEffect(() => {
-    Fetch();
-  }, []);
+  useQuery('logs', Fetch, {
+    retry: false,
+  });
 
   return (
     <div>

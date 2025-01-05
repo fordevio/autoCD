@@ -2,7 +2,8 @@ import toast from 'react-hot-toast';
 import { deleteUser, updateUser } from '../../../api/user';
 import { UserModel } from '../../../models/user';
 import './index.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
 
 interface Props {
   user: UserModel;
@@ -13,20 +14,12 @@ interface Props {
 const UserCard: React.FC<Props> = ({ user, users, setUsers }) => {
   const [username, setUsername] = useState<string>(user.username);
   const [password, setPassword] = useState<string>(user.password);
-  const [admin, setAdmin] = useState<boolean>(false);
-  const [member, setMember] = useState<boolean>(false);
   const [read, setRead] = useState<boolean>(false);
   const [write, setWrite] = useState<boolean>(false);
   const [del, setDel] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (user.roles.includes('ADMIN')) {
-      setAdmin(true);
-    }
-    if (user.roles.includes('MEMBER')) {
-      setMember(true);
-    }
+  const init = () => {
     if (user.permissions.includes('READ')) {
       setRead(true);
     }
@@ -36,7 +29,12 @@ const UserCard: React.FC<Props> = ({ user, users, setUsers }) => {
     if (user.permissions.includes('DELETE')) {
       setDel(true);
     }
-  }, []);
+  };
+
+  useQuery('init', init, {
+    retry: false,
+  });
+
   const deleteFunc = async () => {
     try {
       await deleteUser(user.id);
@@ -58,32 +56,17 @@ const UserCard: React.FC<Props> = ({ user, users, setUsers }) => {
   };
 
   const submitFunc = async () => {
-    if (
-      username === '' ||
-      password === '' ||
-      (!admin && !member) ||
-      (!read && !write && !del)
-    ) {
+    if (username === '' || password === '' || (!read && !write && !del)) {
       toast.error('Please fill all fields');
       return;
     }
     try {
-      const roles = [admin ? 'ADMIN' : null, member ? 'MEMBER' : null].filter(
-        (value): value is string => Boolean(value)
-      );
-
       const members = [
         read ? 'READ' : null,
         write ? 'WRITE' : null,
         del ? 'DELETE' : null,
       ].filter((value): value is string => Boolean(value));
-      await updateUser(
-        user.id,
-        username,
-        password,
-        roles,
-        members
-      );
+      await updateUser(user.id, username, password, members);
 
       setUsers(
         users.filter(u => {
@@ -91,7 +74,6 @@ const UserCard: React.FC<Props> = ({ user, users, setUsers }) => {
             u.username = username;
             u.password = password;
             u.permissions = members;
-            u.roles = roles;
           }
           return false;
         })
@@ -170,43 +152,36 @@ const UserCard: React.FC<Props> = ({ user, users, setUsers }) => {
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
-            <div>
-              <p>Roles* </p>
-              <input
-                type="checkbox"
-                checked={admin}
-                onChange={e => setAdmin(!admin)}
-              />
-              <span>ADMIN </span>
-
-              <input
-                type="checkbox"
-                checked={member}
-                onChange={e => setMember(!member)}
-              />
-              <span>MEMBER </span>
-            </div>
 
             <div>
               <p>Permissions* </p>
               <input
                 type="checkbox"
                 checked={read}
-                onChange={e => setRead(!read)}
+                onChange={e => {
+                  if (user.roles.includes('ADMIN')) return;
+                  setRead(!read);
+                }}
               />
               <span>READ </span>
 
               <input
                 type="checkbox"
                 checked={write}
-                onChange={e => setWrite(!write)}
+                onChange={e => {
+                  if (user.roles.includes('ADMIN')) return;
+                  setWrite(!write);
+                }}
               />
               <span>WRITE </span>
 
               <input
                 type="checkbox"
                 checked={del}
-                onChange={e => setDel(!del)}
+                onChange={e => {
+                  if (user.roles.includes('ADMIN')) return;
+                  setDel(!del);
+                }}
               />
               <span>DELETE </span>
             </div>

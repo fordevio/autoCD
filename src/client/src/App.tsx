@@ -3,7 +3,7 @@ import Projects from './pages/project';
 import Login from './pages/login';
 import './index.css';
 import Navbar from './components/navbar';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getToken } from './utils/utils';
 import toast from 'react-hot-toast';
 import { getCurrentUser } from './api/user';
@@ -11,6 +11,7 @@ import { CurrentUser } from './models/user';
 import User from './pages/user';
 import Script from './pages/script';
 import Logs from './pages/logs';
+import { useQuery } from 'react-query';
 
 function App() {
   const navigate = useNavigate();
@@ -38,9 +39,11 @@ function App() {
       }
     }
   };
-  useEffect(() => {
-    fetchCurrentUser();
-  }, []);
+
+  useQuery('currentUser', fetchCurrentUser, {
+    retry: false,
+  });
+
   return (
     <div>
       <Navbar currUser={currUser} setCurrUser={setCurrUser} />
