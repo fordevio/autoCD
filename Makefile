@@ -1,4 +1,10 @@
-build: get
+build: buildFrontend buildProducerDevImage
+	@docker run -it --rm -v $(shell pwd)/src/producer/:/app -v /var/autocd:/var/autocd -p 5001:5001 autocd-producer /bin/bash -c "mvn clean install -DskipTests -Dmaven.test.skip=true" 
+
+buildFrontend:
+	@docker run -it --rm -v $(shell pwd)/:/app -p 3000:3000 autocd-client /bin/bash -c "npm --prefix ./src/client install && npm --prefix ./src/client run build"
+
+build: 
 	@npm --prefix ./src/client run build  && mvn -f ./src/producer/pom.xml clean install -DskipTests -Dmaven.test.skip=true
 
 run:
@@ -8,13 +14,13 @@ test:
 	@mvn -f ./src/producer/pom.xml test
 
 format: buildClientDevImage
-	@docker run -it --rm -v $(shell pwd)/src/client/:/app -p 3000:3000 autocd-client /bin/bash -c "npm run format" 
+	@docker run -it --rm -v $(shell pwd)/src/client/:/app -p 3000:3000 autocd-client /bin/bash -c "npm install && npm run format" 
 	
 
 buildProducerDevImage:
 	@docker build -t autocd-producer -f ./src/producer/Dockerfile.dev ./src/producer/
 
-buildClientDevImage: get
+buildClientDevImage: 
 	@docker build -t autocd-client -f ./src/client/Dockerfile.dev ./src/client/
 
 runProducerDevContainer: buildProducerDevImage
@@ -26,7 +32,8 @@ runClientDevImage: buildClientDevImage
 
 help:
 	@echo "Available commands:"
-	@echo "  make build                  - Build the application"
+	@echo "  make build                   - Build autoCD"
+	@echo "  make buildFrontend           - Build the frontend"
 	@echo "  make buildProducerDevImage   - Build java dev docker image"
 	@echo "  make runProducerDevContainer - Run java dev docker image"
 	@echo "  make buildClientDevImage     - Build client dev image"
