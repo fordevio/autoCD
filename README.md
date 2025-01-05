@@ -62,7 +62,7 @@ PID=$(sudo lsof -t -i :5001)
 sudo kill -9 $PID
 ```
 
-
+[Good blog](https://medium.com/@fordev951/automating-cd-with-autocd-44adc1bad222)  to get hands on experince with autoCD.
 # Contributing to autoCD
  Visit [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for contributions guidlines. 
 
