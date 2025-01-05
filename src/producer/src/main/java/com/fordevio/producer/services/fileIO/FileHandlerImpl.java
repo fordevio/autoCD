@@ -3,8 +3,14 @@ package com.fordevio.producer.services.fileIO;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fordevio.producer.models.User;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -126,5 +132,25 @@ public class FileHandlerImpl implements FileHandlerSvc{
         } else {
             log.error(scriptFilePath + " failed with exit code " + exitCode);
         }
+    }
+
+    @Override
+    public void updateCredentialFile(User admin) throws Exception {
+        String path = "/var/autocd/admin-credential.json";
+        File credentialFile = new File(path);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        if (credentialFile.exists()) {
+            Map<String, Object> jsonData = objectMapper.readValue(credentialFile, new TypeReference<Map<String, Object>>() {});
+            jsonData.put("username", admin.getUsername());
+            jsonData.put("password", admin.getPassword());
+            objectMapper.writeValue(credentialFile, jsonData);
+            log.info("Credentials file updated");
+        }
+        Map<String, Object> defaultData = new HashMap<>();
+        defaultData.put("username", admin.getUsername());
+        defaultData.put("password", admin.getPassword());
+        objectMapper.writeValue(credentialFile, defaultData);
+        log.info("Credentials file created");
     }
 }

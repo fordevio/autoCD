@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fordevio.producer.models.Project;
+import com.fordevio.producer.models.User;
 import com.fordevio.producer.services.database.ProjectHandler;
 import com.fordevio.producer.services.database.UserHandler;
 import com.fordevio.producer.services.fileIO.FileHandlerSvc;
@@ -45,6 +46,8 @@ public class StartRunner {
     public void init(){
       try{
         createAdminIfNot();
+        User admin = userHandler.getAdminUser();
+        fileHandler.updateCredentialFile(admin);
         createProjectStatusMap();
         createMainThread();
       }catch(Exception e){
@@ -59,6 +62,7 @@ public class StartRunner {
             fileHandler.createDirIfNot("producerDb");
             fileHandler.createDirIfNot("scripts");
             fileHandler.createDirIfNot("logs");
+
 
         } catch (Exception e) {
             log.error("Error while creating admin", e);

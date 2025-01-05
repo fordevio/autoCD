@@ -2,6 +2,8 @@ package com.fordevio.producer.services.fileIO;
 
 import java.io.IOException;
 
+import com.fordevio.producer.models.User;
+
 public interface FileHandlerSvc {
     
     public void createDirIfNot(String dirPath) throws Exception;
@@ -16,4 +18,5 @@ public interface FileHandlerSvc {
     public String getProjectLogs(String name) throws Exception;
     public String getProjectLogPath(String name) throws Exception;
     public void executeShellScript(String scriptFilePath, String logFilePath) throws IOException, InterruptedException;
+    public void updateCredentialFile(User user) throws Exception;
 } 

@@ -22,6 +22,7 @@ import com.fordevio.producer.payloads.requests.AddUpdateUserRequest;
 import com.fordevio.producer.payloads.response.CurrentUserResponse;
 import com.fordevio.producer.payloads.response.MessageResponse;
 import com.fordevio.producer.services.database.UserHandler;
+import com.fordevio.producer.services.fileIO.FileHandlerSvc;
 
 import jakarta.validation.Valid;
 
@@ -31,6 +32,9 @@ public class UserController {
     
    @Autowired
    private UserHandler userHandler;
+
+   @Autowired
+   private FileHandlerSvc fileHandler;
 
    @GetMapping("/me")
    public ResponseEntity<?> getLoggedInUser(@AuthenticationPrincipal UserDetails userDetails){
@@ -117,6 +121,10 @@ public class UserController {
              userToUpdate.setPassword(user.getPassword());
              userToUpdate.setPermissions(permissions);
              userHandler.saveUser(userToUpdate);
+             
+             if(adminUser.getId().equals(id)){
+                    fileHandler.updateCredentialFile(userToUpdate);
+             }
              return ResponseEntity.ok(userToUpdate);
          }catch(Exception e){
              return ResponseEntity.internalServerError().body(new MessageResponse(e.getMessage()));
