@@ -35,7 +35,7 @@ cd autoCD
 make runProducerDevContainer
 
 ## Run docker container for frontend react development on different terminal
-make runClientDevImage
+make runClientDevContainer
  
 ```
 
