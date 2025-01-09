@@ -1,7 +1,6 @@
 ![Logo](assets/autocd-logo.png)
 
 # autoCD
-It is a platform to provide automation to CD in monolythic server.
 
 ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
@@ -11,17 +10,20 @@ It is a platform to provide automation to CD in monolythic server.
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 
-# Project Status
-Current the version 1.0.0 is released with the features below, upcoming relases will work on solving frontend bugs and inproving UI.
-
-# Features
+# Overview
+It is a tool to automate the CD  of projects hosted in your monolythic server.
+### Features
  - Maintain users
  - Maintain users permissions
  - Maintain projects
  - Project CD script
  - Message queue
  - Autoscalling of threads 
- - Application logs
+ - Application CD logs
+
+
+# Project Status
+Current the version 1.3.1 is released with the features above, upcoming relases will work on solving frontend bugs and inproving UI.
 
  # Quickstart
 
@@ -63,7 +65,13 @@ sudo kill -9 $PID
 ```
 
 [Good blog](https://medium.com/@fordev951/automating-cd-with-autocd-44adc1bad222)  to get hands on experince with autoCD.
-# Contributing to autoCD
+
+## ⭐️ Support
+
+If you find this project helpful or interesting, please give it a ⭐️ on [GitHub](https://github.com/fordevio/autoCD)! Your support helps the project grow and motivates community to keep improving it.
+Also join the [#autoCD](https://fordev-io.slack.com/archives/C086UJZ4658) slack channel.
+
+# Contributing
  Visit [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for contributions guidlines. 
 
 # Acknowledgements
