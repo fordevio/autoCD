@@ -11,18 +11,22 @@
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 
 # Overview
-It is a tool to automate the CD  of projects hosted in your monolythic server.
+
+autoCD is a Continuous Delivery automation platform designed for monolithic servers. It provides a web-based interface for managing deployment scripts, users, and projects, with automated execution of CD pipelines through a multi-threaded script runner. The system combines a React frontend with a Spring Boot backend to deliver a complete solution for automating software deployments.
+
 ### Features
- - Maintain users
- - Maintain users permissions
- - Maintain projects
- - Project CD script
- - Message queue
- - Autoscalling of threads 
- - Application CD logs
+
+autoCD automates the continuous delivery process by:
+
+* Managing deployment scripts stored as shell files in /var/autocd/scripts/
+* Providing user authentication and permission management via JWT tokens
+* Executing deployment scripts through a dynamic thread pool system
+* Tracking execution status and logging output to /var/autocd/logs/
+* Offering a web interface for project management and script editing
 
 
 # Project Status
+
 Current the version 1.3.1 is released with the features above, upcoming relases will work on solving frontend bugs and inproving UI.
 
  # Quickstart
@@ -72,7 +76,13 @@ If you find this project helpful or interesting, please give it a ⭐️ on [Git
 Also join the [#autoCD](https://fordev-io.slack.com/archives/C086UJZ4658) slack channel.
 
 # Contributing
- Visit [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for contributions guidlines. 
+
+Visit [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for contributions guidlines. 
+
+# AI Docs
+
+https://deepwiki.com/fordevio/autoCD
 
 # Acknowledgements
+
 autoCD logo is generated using ChatGPT.
