@@ -146,6 +146,9 @@ const Script = () => {
         </button>
       </div>
       <p>
+        Token is valid for 1 year after generation, you can use it to trigger the script
+      </p>
+      <p>
         <span>Token: </span>
         {token ? token : 'Click the button to generate a token'}
       </p>
