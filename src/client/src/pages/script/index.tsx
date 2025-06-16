@@ -19,7 +19,7 @@ const Script = () => {
   const [script, setScript] = useState<string>('');
   const [newScript, setNewScript] = useState<string>('');
   const [edit, setEdit] = useState<boolean>(false);
-  const [token, setToken] = useState<string>('');
+  const [token, setToken] = useState<string | null>(null);
   const fetch = async () => {
     try {
       const projectRes = await getProject(numericId);
@@ -134,7 +134,8 @@ const Script = () => {
             <p>
               curl -X POST \<br />
               -H "Content-Type: application/json" \<br />
-              {`${getHost()}/api/deliver/${project?.name}?token="your-auth-token"`}
+              {`${getHost()}/api/deliver/${id}?token=${token ? token : 'generate-token'}`}{' '}
+              <br />
             </p>
           </div>
         </div>
@@ -145,8 +146,12 @@ const Script = () => {
         </button>
       </div>
       <p>
+        Token is valid for 1 year after generation, you can use it to trigger
+        the script
+      </p>
+      <p>
         <span>Token: </span>
-        {token}
+        {token ? token : 'Click the button to generate a token'}
       </p>
     </div>
   );
