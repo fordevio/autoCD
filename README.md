@@ -27,7 +27,7 @@ autoCD automates the continuous delivery process by:
 
 # Project Status
 
-Current the version 1.3.1 is released with the features above, upcoming relases will work on solving frontend bugs and inproving UI.
+Current the version 1.3.2 is released with the features above, upcoming relases will work on solving frontend bugs and inproving UI.
 
  # Quickstart
 
@@ -46,7 +46,7 @@ Use the value of version you want to install
 
 
 ```
-VERSION=1.3.1
+VERSION=1.3.2
 wget https://github.com/fordevio/autoCD/releases/download/v$VERSION/autocd-$VERSION.zip
 unzip autocd-$VERSION.zip
 sudo nohup java -jar autocd-$VERSION.jar > output.log 2>&1 &
