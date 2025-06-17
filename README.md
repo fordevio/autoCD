@@ -73,7 +73,7 @@ sudo kill -9 $PID
 ## ⭐️ Support
 
 If you find this project helpful or interesting, please give it a ⭐️ on [GitHub](https://github.com/fordevio/autoCD)! Your support helps the project grow and motivates community to keep improving it.
-Also join the [#autoCD](https://fordev-io.slack.com/archives/C086UJZ4658) slack channel.
+Also join the [#autoCD](https://join.slack.com/t/fordev-io/shared_invite/zt-37ixcb48j-o9AnvibyCSc0PCRQdIZIHg) slack channel.
 
 # Contributing
 

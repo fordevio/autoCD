@@ -1,6 +1,6 @@
 ## Maintainers of wharf
 
-| Name              | Email                     | Kubernetes Slack     | GitHub                                               | Company                        |
+| Name              | Email                     | Fordev-io Slack     | GitHub                                               | Company                        |
 |-------------------|---------------------------|----------------------|------------------------------------------------------|--------------------------------|
 | Yash Patel | yp969803@gmail.com       | `@yp969803`            | [@yp969803](https://github.com/yp969803)                 | ForDEV-io                   |
                      
