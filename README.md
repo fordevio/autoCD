@@ -46,7 +46,7 @@ Use the value of version you want to install
 
 
 ```
-VERSION=1.3.2
+VERSION=1.3.3
 wget https://github.com/fordevio/autoCD/releases/download/v$VERSION/autocd-$VERSION.zip
 unzip autocd-$VERSION.zip
 sudo nohup java -jar autocd-$VERSION.jar > output.log 2>&1 &
