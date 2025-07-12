@@ -34,8 +34,8 @@ public class CDController {
     @Autowired
     private JwtUtils jwtUtils;
     
-    @PostMapping("/{projectName}")
-    public ResponseEntity<?> deliverProject(@PathVariable String projectName, @RequestParam(required = true) String token){
+    @PostMapping("/{id}")
+    public ResponseEntity<?> deliverProject(@PathVariable long id, @RequestParam(required = true) String token){
         try{
             jwtUtils.validateJwtToken(token);
         }catch(Exception e){
@@ -44,7 +44,7 @@ public class CDController {
         }
         try{
 
-            Project project = projectHandler.getProjectByName(projectName);
+            Project project = projectHandler.getProjectById(id);
             if(project == null){
                 return ResponseEntity.badRequest().body(new MessageResponse("Project does not exist"));
             }
@@ -52,7 +52,7 @@ public class CDController {
             int randomNumber = 1000 + random.nextInt(9000);
             ProjectExecute projectExecute = new ProjectExecute(randomNumber*1L, project.getId(), project.getName(), new Date());
             queueService.addProjectToQueue(projectExecute);
-            log.info("Delivered CD msg for: {}, projectExecuteId: {}", projectName, projectExecute.getId());
+            log.info("Delivered CD msg for: {}, projectExecuteId: {}", project.getName(), projectExecute.getId());
             return ResponseEntity.ok(new MessageResponse("Project CD successfully"));
         }catch(Exception e){
             log.warn("Error while delivering project to queue", e);
